@@ -1,84 +1,137 @@
 const { BrevoClient } = require('@getbrevo/brevo');
 
 const brevo = new BrevoClient({
-  apiKey: process.env.BREVO_API_KEY, //* api key
+  apiKey: process.env.BREVO_API_KEY,
 });
 
 module.exports = async (newUser) => {
 
-  const otp = Math.floor(100000 + Math.random() * 900000);
+  const otp = String(Math.floor(100000 + Math.random() * 900000));
+  const otpDigits = otp.split('');
 
   await brevo.transactionalEmails.sendTransacEmail({
     sender: {
-      name: "Courses Platform",
-      email: process.env.SMTP_USER, // you gmail
+      name: "Busly",
+      email: process.env.SMTP_USER,
     },
     to: [
       {
         email: newUser.email,
-        name: newUser.first_name || "User",
+        name: newUser.first_name || "عميلنا العزيز",
       }
     ],
-    subject: "Verify Your Email - Courses Platform",
-    textContent: `
-Hello ${newUser.first_name || ''},
+    subject: "رمز التحقق الخاص بك - Busly",
 
-Welcome to our Courses Platform 🎓
-
-We're excited to have you! To complete your registration, please verify your email using the OTP below:
-
-Your OTP: ${otp}
-
-This code will expire in 5 minutes.
-
-If you didn’t request this, please ignore this email.
-
-Best regards,
-Courses Platform Team
-    `,
     htmlContent: `
-    <div style="font-family: Arial, sans-serif; background-color: #f4f6f8; padding: 20px;">
-        <div style="max-width: 500px; margin: auto; background: #ffffff; padding: 30px; border-radius: 10px; text-align: center;">
-            
-            <h2 style="color: #333;">Welcome to Courses Platform 🎓</h2>
-            
-            <p style="color: #555; font-size: 15px;">
-                Hi ${newUser.first_name || 'there'}, <br><br>
-                We're excited to have you join our platform! 🚀<br>
-                To complete your registration, please verify your email address.
-            </p>
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    /* لتحسين العرض على تطبيقات الموبايل */
+    @media only screen and (max-width: 600px) {
+      .inner-padding { padding: 30px 20px !important; }
+      .otp-digit { width: 40px !important; height: 50px !important; line-height: 50px !important; font-size: 20px !important; }
+    }
+  </style>
+</head>
 
-            <p style="margin-top: 20px; color: #777;">
-                Use the OTP below:
-            </p>
+<body style="margin:0; padding:0; background-color:#0f172a; font-family: Tahoma, Arial, sans-serif; -webkit-font-smoothing: antialiased;">
 
-            <div style="
-                font-size: 28px;
-                font-weight: bold;
-                letter-spacing: 5px;
-                color: #2c7be5;
-                background: #eef4ff;
-                padding: 15px;
-                border-radius: 8px;
-                margin: 20px 0;
-                display: inline-block;
-            ">
-                ${otp}
-            </div>
+  <table width="100%" border="0" cellpadding="0" cellspacing="0" style="background-color:#0f172a; padding: 40px 10px;">
+    <tr>
+      <td align="center">
+        
+        <table width="100%" border="0" cellpadding="0" cellspacing="0" style="max-width:600px; background-color:#1e293b; border-radius:24px; overflow:hidden; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3);">
+          
+          <tr>
+            <td class="inner-padding" style="padding: 40px 40px 20px 40px; text-align: right;">
+              <table border="0" cellpadding="0" cellspacing="0" style="display: inline-table;">
+                <tr>
+                  <td style="background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%); padding: 12px 25px; border-radius: 12px;">
+                    <span style="color: #ffffff; font-size: 24px; font-weight: bold; display: block; line-height: 1;">Busly</span>
+                  </td>
+                </tr>
+              </table>
+              <div style="margin-top: 12px; color: #94a3b8; font-size: 14px;">المنصة الرائدة لحجز الحافلات</div>
+            </td>
+          </tr>
 
-            <p style="color: #999; font-size: 13px;">
-                This code will expire in 5 minutes.
-            </p>
+          <tr>
+            <td class="inner-padding" style="padding: 20px 40px; text-align: right;">
+              <h1 style="color: #f8fafc; font-size: 22px; font-weight: bold; margin: 0; direction: rtl;">
+                مرحباً، ${newUser.first_name || 'بك'}
+              </h1>
+              <p style="color: #cbd5e1; font-size: 15px; line-height: 1.8; margin: 15px 0 0 0; direction: rtl;">
+                نحن متحمسون لانضمامك إلينا! يرجى استخدام رمز التحقق أدناه لتأكيد هويتك وإتمام عملية التسجيل في منصة <strong>Busly</strong>.
+              </p>
+            </td>
+          </tr>
 
-            <hr style="margin: 25px 0; border: none; border-top: 1px solid #eee;" />
+          <tr>
+            <td align="center" style="padding: 30px 40px;">
+              <div style="background-color: #334155; border-radius: 20px; padding: 35px 10px; border: 1px solid #475569;">
+                <div style="margin-bottom: 25px; color: #818cf8; font-weight: bold; font-size: 14px; letter-spacing: 1px;">رمز التحقق (OTP)</div>
+                
+                <table border="0" cellpadding="0" cellspacing="0" dir="ltr">
+                  <tr>
+                    ${otpDigits.map(d => `
+                      <td style="padding: 0 4px;">
+                        <div class="otp-digit" style="width: 48px; height: 58px; line-height: 58px; background-color: #1e293b; color: #ffffff; border: 1px solid #6366f1; border-radius: 12px; font-size: 24px; font-weight: bold; text-align: center; box-shadow: 0 4px 6px rgba(0,0,0,0.2);">
+                          ${d}
+                        </div>
+                      </td>
+                    `).join('')}
+                  </tr>
+                </table>
 
-            <p style="color: #aaa; font-size: 12px;">
-                If you did not request this email, you can safely ignore it.
-            </p>
+                <div style="margin-top: 25px; color: #94a3b8; font-size: 13px;">
+                  الرمز صالح لمدة <span style="color: #fb7185; font-weight: bold;">5 دقائق</span> فقط
+                </div>
+              </div>
+            </td>
+          </tr>
 
-        </div>
-    </div>
-    `
+          <tr>
+            <td class="inner-padding" style="padding: 0 40px 40px 40px;">
+              <table width="100%" border="0" cellpadding="0" cellspacing="0" style="background-color: rgba(244, 63, 94, 0.1); border-right: 4px solid #f43f5e; border-radius: 8px;">
+                <tr>
+                  <td style="padding: 16px 20px; text-align: right;">
+                    <div style="color: #fb7185; font-size: 14px; font-weight: bold; margin-bottom: 5px;">⚠️ تنبيه أمني هام</div>
+                    <div style="color: #e2e8f0; font-size: 13px; line-height: 1.6; direction: rtl;">
+                      لا تشارك هذا الرمز مع أي شخص. فريق Busly لن يطلب منك الكود عبر الهاتف أو البريد الإلكتروني.
+                    </div>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <tr>
+            <td style="padding: 35px 40px; background-color: #0f172a; text-align: center;">
+              <div style="color: #f8fafc; font-size: 14px; font-weight: bold; margin-bottom: 8px;">هل تواجه مشكلة؟</div>
+              <div style="color: #64748b; font-size: 12px; margin-bottom: 20px;">تواصل معنا عبر البريد الإلكتروني للدعم الفني</div>
+              
+              <div style="border-top: 1px solid #1e293b; padding-top: 20px;">
+                <span style="color: #475569; font-size: 11px; letter-spacing: 0.5px;">&copy; 2026 BUSLY. جميع الحقوق محفوظة.</span>
+              </div>
+            </td>
+          </tr>
+
+        </table>
+
+        <p style="margin-top: 25px; color: #475569; font-size: 11px; text-align: center;">
+          هذه رسالة تلقائية من نظام Busly، يرجى عدم الرد.
+        </p>
+
+      </td>
+    </tr>
+  </table>
+
+</body>
+</html>
+`
   });
 
   return otp;

@@ -37,12 +37,12 @@ const fileFilter = (req, file, cb)=>{
         }
 }
 
-console.log('testing');
+
 
 const upload = multer({ storage: storage ,fileFilter})
 
 
-router.post('/registration', registration);
+router.post('/registration',registration);
 
 
 

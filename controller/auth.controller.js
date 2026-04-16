@@ -9,18 +9,34 @@ const {generateRefreshToken} = require('../utils/generateRefreshToken');
 const  validator = require('validator');
 const sendOPT = require('../utils/senOTP');
 const fs = require('fs');
-const {test} = require('../DB/Queries/auth/auth');
+const DB_auth = require('../DB/Queries/auth/DB.auth');
+const {validateEmailFormat} = require('../utils/validations');
 
 
 const registration = asyncWrapper(async(req,res,next)=>{
 
-    await test();
+    const newUser = req.body;
 
-    
-    res.json({
+    validateEmailFormat(newUser.email);
+
+    const otp = await sendOPT(newUser);
+
+    await  DB_auth.insertOtp(otp);
+
+    const otpId = await DB_auth.getOtpId(otp);
+
+
+    res
+    .status(utils.HTTP_STATUS.CREATED)
+    .json({
         status : utils.STATUS_TEXT.SUCCESS,
-        code  :  utils.HTTP_STATUS.CREATED  ,
-    })
+        data : 
+            {
+                otpId : otpId,
+                userData : newUser
+            },
+        code :  utils.HTTP_STATUS.CREATED
+    });
 
 
 });
