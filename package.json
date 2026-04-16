@@ -1,0 +1,36 @@
+{
+  "name": "booking-bus-system",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "run:dev": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AbdelrhmanEmadMarouf/Booking-Bus-System.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/AbdelrhmanEmadMarouf/Booking-Bus-System/issues"
+  },
+  "homepage": "https://github.com/AbdelrhmanEmadMarouf/Booking-Bus-System#readme",
+  "dependencies": {
+    "@getbrevo/brevo": "^5.0.4",
+    "bcrypt": "^6.0.0",
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "jsonwebtoken": "^9.0.3",
+    "mssql": "^12.3.0",
+    "multer": "^2.1.1",
+    "validator": "^13.15.35"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.14"
+  }
+}
