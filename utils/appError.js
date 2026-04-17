@@ -1,16 +1,13 @@
-class AppError extends Error{
-    constructor(){
-        super();
-    }
-
-    create(message,statusText,statusCode){
-        this.message =  message;
+class AppError extends Error {
+    constructor(message, statusText, statusCode) {
+        super(message);
         this.statusText = statusText;
-        this.statusCode=statusCode;
-
-        return this;
+        this.statusCode = statusCode;
     }
 
+    static create(message, statusText, statusCode) {
+        return new AppError(message, statusText, statusCode);
+    }
 }
 
-module.exports = new AppError();  
+module.exports = AppError;

@@ -6,7 +6,7 @@ const path = require('path');
 const multer  = require('multer')
 const appError = require('../utils/appError');
 const utils = require('../utils/utils');
-const {registration} = require('../controller/auth.controller');
+const {registration,validateOTP} = require('../controller/auth.controller');
 
 const storage = multer.diskStorage({
         destination: function (req, file, cb) {
@@ -43,6 +43,9 @@ const upload = multer({ storage: storage ,fileFilter})
 
 
 router.post('/registration',registration);
+
+router.route('/otpValidatation')
+        .post(upload.single('avatar'),validateOTP);
 
 
 
