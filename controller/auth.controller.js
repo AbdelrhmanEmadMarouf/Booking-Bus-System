@@ -43,7 +43,7 @@ const validationResult = await validation.loginValidation(req.body.email,req.bod
 if(validationResult.loginStatus){
 
         const accessToken =  generateJWT(validationResult.data);
-        const refreshToken = generateRefreshToken(validationResult.data);
+        const refreshToken = await DB_auth.getRefreshToken(validationResult.data.email);
         await DB_auth.updateRefteshToken(validationResult.data,refreshToken);
         return response.loginSuccessful(accessToken,refreshToken,res)
 

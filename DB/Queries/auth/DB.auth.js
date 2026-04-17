@@ -74,8 +74,8 @@ await sql.query`
 const insertRefreshToken = async(req)=>{
 
 
-let userId = await sql.query`
-    SELECT user_id 
+let user = await sql.query`
+    SELECT * 
     FROM USERS 
     WHERE email = ${req.body.email}
 `;
@@ -85,8 +85,8 @@ const payload = {
     first_name :req.body.first_name ,
     last_name : req.body.last_name,
     role : req.body.role,
-    id : userId.recordset[0].user_id,
-    phone : userId.recordset[0].phone
+    id : user.recordset[0].user_id,
+    phone : user.recordset[0].phone
 };
 
 const refreshToken = generateRefreshToken(payload);
@@ -94,7 +94,7 @@ const refreshToken = generateRefreshToken(payload);
 await sql.query`
 UPDATE USERS
 SET refresh_token = ${refreshToken}
-WHERE user_id = ${userId.recordset[0].user_id}`;
+WHERE user_id = ${user.recordset[0].user_id}`;
 
 return {
     payload,
@@ -141,6 +141,12 @@ const validateOTP = async(otp,otpId)=>{
 
 }
 
+const getRefreshToken  = async(userEmail)=>{
+    const user =await getUserByEmail(userEmail);
+    return user.refresh_token;
+
+}
+
 
 
 module.exports = {
@@ -152,4 +158,5 @@ module.exports = {
     deleteOTP,
     getUserByEmail,
     updateRefteshToken,
+    getRefreshToken
 }

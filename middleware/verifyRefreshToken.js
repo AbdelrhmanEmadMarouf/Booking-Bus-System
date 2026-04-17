@@ -6,9 +6,9 @@ const utils = require('../utils/utils');
 module.exports = async(req,res,next)=>{
 
     const authHeader = req.headers['Authorization'] || req.headers['authorization'];
-
+    
     if(!authHeader){
-    return  res.status(utils.HTTP_STATUS.UNAUTHORIZED)
+        return  res.status(utils.HTTP_STATUS.UNAUTHORIZED)
         .json({
                 status : utils.STATUS_TEXT.FAIL,
                 data :  {
@@ -31,7 +31,6 @@ module.exports = async(req,res,next)=>{
     FROM USERS 
     WHERE user_id = ${userId}
     `;
-
 
     if (!dbRefreshToken.recordset.length) {
     return res.status(utils.HTTP_STATUS.NOT_FOUND).json({
