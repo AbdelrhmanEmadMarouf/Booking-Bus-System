@@ -29,9 +29,9 @@ module.exports = async(req,res,next)=>{
     let dbRefreshToken = await sql.query`
     SELECT refresh_token 
     FROM USERS 
-    WHERE id = ${userId}
+    WHERE user_id = ${userId}
     `;
- 
+
 
     if (!dbRefreshToken.recordset.length) {
     return res.status(utils.HTTP_STATUS.NOT_FOUND).json({
