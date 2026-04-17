@@ -23,7 +23,7 @@ const validateOTP = asyncWrapper(async(req,res,next)=>{
 const otpId = req.body.otpId; 
 const otp = req.body.otp; 
 
-await DB_auth.validateOTP(otp,otpId,req);
+await validation.validateOTP(otp,otpId,req);
 await DB_auth.insertUser(req);
 const tokensData = await DB_auth.insertRefreshToken(req);
 await DB_auth.deleteOTP(otpId);
@@ -54,6 +54,8 @@ if(validationResult.loginStatus){
 
 
 })
+
+
 
 
 module.exports = {

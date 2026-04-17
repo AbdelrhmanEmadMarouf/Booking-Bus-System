@@ -22,28 +22,6 @@ return otpId.recordset[0].id;
 
 }
 
-const validateOTP = async(otp,otpId,req)=>{
-
-    const result = await sql.query`
-        SELECT OTP FROM OTP_Table
-        WHERE ID = ${otpId} AND OTP = ${otp}
-    `;
-
-    if(result.recordset.length === 0){
-
-    /*
-    1- the file is already uploaded into the server 
-    2- here the validation of the otp is faild so we deleted this file from the 
-        server 
-    */
-    if (req.file && fs.existsSync(req.file.path)) {
-        fs.unlinkSync(req.file.path);
-    }
-
-        throw errors.WRONG_OTP_ERROR;
-    }
-}
-
 const insertUser = async(req)=>{
 
 //* hashing password before storing in DB
@@ -153,6 +131,16 @@ const getUserByEmail = async(email)=>{
     return user.recordset[0];
 }
 
+const validateOTP = async(otp,otpId)=>{
+
+        const result = await sql.query`
+            SELECT OTP FROM OTP_Table
+            WHERE ID = ${otpId} AND OTP = ${otp}
+        `;
+        return result.recordset[0];
+
+}
+
 
 
 module.exports = {
@@ -163,5 +151,5 @@ module.exports = {
     insertRefreshToken,
     deleteOTP,
     getUserByEmail,
-    updateRefteshToken
+    updateRefteshToken,
 }
