@@ -64,7 +64,7 @@ const userData = {
         role: req.currentUser.role,
         id: req.currentUser.id
     }
-const newAccessToken = generateAccessToken(userData);
+const newAccessToken = generateJWT(userData);
 return  response.refreshToken(res,newAccessToken);
 
     })
