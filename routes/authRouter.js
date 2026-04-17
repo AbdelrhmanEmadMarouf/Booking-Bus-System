@@ -6,7 +6,7 @@ const path = require('path');
 const multer  = require('multer')
 const appError = require('../utils/appError');
 const utils = require('../utils/utils');
-const {registration,validateOTP,login} = require('../controller/auth.controller');
+const {registration,validateOTP,login,refreshTokenHandler} = require('../controller/auth.controller');
 
 const storage = multer.diskStorage({
         destination: function (req, file, cb) {
@@ -50,6 +50,8 @@ router.route('/otpValidatation')
 
 router.route('/login')
         .post(login);
+
+router.post('/refresh-token', verifyRefreshToken,refreshTokenHandler);
 
 
 module.exports = router ;

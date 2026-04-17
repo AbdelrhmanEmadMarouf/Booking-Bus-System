@@ -53,9 +53,21 @@ const loginFaild = (res)=>{
         })
 }
 
+const refreshToken = (res,newAccessToken) =>{
+    return res.status(utils.HTTP_STATUS.OK)
+    .json({
+            status : utils.STATUS_TEXT.SUCCESS,
+            data :  {
+                accessToken : newAccessToken,
+            },
+            code :  utils.HTTP_STATUS.OK
+    })
+}
+
 module.exports = { 
     validateOtp,
     registration,
     loginSuccessful,
-    loginFaild
+    loginFaild,
+    refreshToken
 }

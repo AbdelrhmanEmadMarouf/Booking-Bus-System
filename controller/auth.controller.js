@@ -34,7 +34,6 @@ return response.validateOtp(tokensData.payload,req.avatarPath,accessToken,tokens
 
 })
 
-
 const login = asyncWrapper(async(req,res,next)=>{
 
 validation.isEmailExist(req.body.email);
@@ -55,11 +54,27 @@ if(validationResult.loginStatus){
 
 })
 
+const refreshTokenHandler = asyncWrapper(async(req,res,next)=>{
+
+const userData = {
+        email: req.currentUser.email,
+        first_name: req.currentUser.first_name,
+        last_name: req.currentUser.last_name,
+        password:req.currentUser.password,
+        role: req.currentUser.role,
+        id: req.currentUser.id
+    }
+const newAccessToken = generateAccessToken(userData);
+return  response.refreshToken(res,newAccessToken);
+
+    })
+
+
 
 
 
 module.exports = {
-   // refreshTokenHandler,
+    refreshTokenHandler,
     login,
     registration,
     validateOTP
