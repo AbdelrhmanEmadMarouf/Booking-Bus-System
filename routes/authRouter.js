@@ -6,7 +6,7 @@ const path = require('path');
 const multer  = require('multer')
 const appError = require('../utils/appError');
 const utils = require('../utils/utils');
-const {registration,validateOTP} = require('../controller/auth.controller');
+const {registration,validateOTP,login} = require('../controller/auth.controller');
 
 const storage = multer.diskStorage({
         destination: function (req, file, cb) {
@@ -42,11 +42,14 @@ const fileFilter = (req, file, cb)=>{
 const upload = multer({ storage: storage ,fileFilter})
 
 
-router.post('/registration',registration);
+router.route('/registration')
+        .post(registration);
 
 router.route('/otpValidatation')
         .post(upload.single('avatar'),validateOTP);
 
+router.route('/login')
+        .post(login);
 
 
 module.exports = router ;

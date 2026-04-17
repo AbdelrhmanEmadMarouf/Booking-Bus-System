@@ -125,6 +125,14 @@ return {
 
 }
 
+const updateRefteshToken = async(user,refreshToken)=>{
+    await sql.query`
+        UPDATE USERS
+        SET refresh_token = ${refreshToken}
+        WHERE user_id = ${user.user_id}
+        `
+}
+
 const deleteOTP = async(otpId)=>{
 
     //* delte the otp to garante that is won't use after this process
@@ -135,6 +143,17 @@ const deleteOTP = async(otpId)=>{
 
 }
 
+const getUserByEmail = async(email)=>{
+    const user =   await sql.query`
+        SELECT * 
+        FROM USERS
+        WHERE email = ${email}
+    `;
+
+    return user.recordset[0];
+}
+
+
 
 module.exports = {
     insertOtp,
@@ -142,5 +161,7 @@ module.exports = {
     validateOTP,
     insertUser,
     insertRefreshToken,
-    deleteOTP
+    deleteOTP,
+    getUserByEmail,
+    updateRefteshToken
 }
