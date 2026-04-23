@@ -1,6 +1,8 @@
 const  validator = require('validator');
 const errors = require('./errors');
 const DB_auth = require('../DB/Queries/auth/DB.auth');
+const DB_user = require('../DB/Queries/users/DB.users');
+const DB_bus = require('../DB/Queries/bus/DB.bus');
 const bcrypt = require('bcrypt');
 const fs = require('fs');
 
@@ -90,6 +92,53 @@ const validateOTP = async(otp,otpId,req)=>{
 
 }
 
+const isDriver = async(user_id)=>{
+    return DB_user.isUserDriver(user_id);
+}
+
+const isDriverFree = async(startTime,endTime,driver_id)=>{
+
+    const driverData = await DB_user.getDriverTrips(driver_id);
+
+    let isDriverFree = true;
+
+    //*is startTime and End Time is Free To user?
+    driverData.recordset.forEach((it)=>{
+        if(it.scheduled_departure_date >= startTime && it.scheduled_arrival_date <=endTime){
+            isDriverFree = false ;
+        }
+    })
+
+}
+
+
+
+const isBusFree = async(startTime,endTime,bus_id)=>{
+
+    
+
+    const busData = await DB_bus.getBusTrips(bus_id);
+
+    
+
+    let isBusFree = true;
+
+    //*is startTime and End Time is Free To user?
+    busData.recordset.forEach((it)=>{
+            console.log(it.scheduled_departure_date);
+            console.log(startTime);
+            console.log("---------------");
+        if(it.scheduled_departure_date >= startTime && it.scheduled_arrival_date <=endTime){
+            isBusFree = false ;
+            console.log(isBusFree);
+        }
+    })
+
+
+    return isBusFree;
+
+}
+
 
 
 
@@ -99,5 +148,8 @@ module.exports = {
     isEmailExist,
     isPasswoedExist,
     loginValidation,
-    validateOTP
+    validateOTP,
+    isDriverFree,
+    isDriver,
+    isBusFree
 }

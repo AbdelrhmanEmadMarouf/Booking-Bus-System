@@ -11,6 +11,7 @@ const tripRouter = require('./routes/tripRouter');
 const routeRouter = require('./routes/routeRouter');
 const stationRouter = require('./routes/stationRouter');
 const cityRouter = require('./routes/cityRouter');
+const busRouter = require('./routes/busRouter');
 
 var corsOptions = {
     origin:  'http://127.0.0.1:5500',
@@ -34,6 +35,7 @@ app.use('/api/trip',cors(corsOptions), tripRouter);
 app.use('/api/route',cors(corsOptions), routeRouter);
 app.use('/api/station',cors(corsOptions), stationRouter);
 app.use('/api/city',cors(corsOptions), cityRouter);
+app.use('/api/bus',cors(corsOptions), busRouter);
 app.use('/uploads/',express.static(path.join(__dirname,'uploads')));
 
 

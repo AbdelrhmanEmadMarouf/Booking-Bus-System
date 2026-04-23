@@ -1,0 +1,120 @@
+
+INSERT INTO city (city_name) VALUES
+('Cairo'), ('Giza'), ('Alexandria'), ('Dakahlia'), ('Sharqia'), 
+('Gharbia'), ('Monufia'), ('Qalyubia'), ('Beheira'), ('Fayoum'), 
+('Minya'), ('Asyut'), ('Sohag'), ('Qena'), ('Luxor'), 
+('Aswan'), ('Port Said'), ('Ismailia'), ('Suez'), ('Damietta'),
+('Red Sea'), ('Matrouh'), ('North Sinai'), ('South Sinai'), ('New Valley'), 
+('Beni Suef'), ('Kafr El Sheikh');
+
+INSERT INTO station (name, city_id) VALUES
+-- القاهرة والجيزة
+('Ramses Station', 1), ('Tahrir Square', 1), ('Giza Station', 2),
+-- الدلتا
+('Sidi Gaber', 3), ('Misr Station (Alex)', 3), ('Mansoura Main', 4),
+('Zagazig Station', 5), ('Tanta Hub', 6), ('Shibin El Kom', 7),
+('Banha Station', 8), ('Damanhour Station', 9), ('Kafr El Sheikh Station', 27),
+-- الصعيد
+('Beni Suef Main', 26), ('Minya Station', 11), ('Asyut Terminal', 12),
+('Sohag Station', 13), ('Qena Central', 14), ('Luxor Central', 15),
+('Aswan High Dam', 16), ('Fayoum Terminal', 10), ('Kharga Station', 25),
+-- مدن القناة وسيناء والبحر الأحمر
+('Port Said Terminal', 17), ('Ismailia Station', 18), ('Suez Central', 19),
+('Hurghada Plaza', 21), ('Sharm El Sheikh Terminal', 24), ('Arish Station', 23),
+('Marsa Matrouh Station', 22), ('Damietta Station', 20);
+
+-- مسح البيانات القديمة لتجنب التكرار (اختياري)
+-- TRUNCATE TABLE route;
+
+INSERT INTO route (name, distance, duration, origin_station_id, destination_station_id)
+VALUES
+-- القاهرة ↔ الإسكندرية
+('Cairo - Alexandria', 210, 150, 
+    (SELECT TOP 1 station_id FROM station WHERE name = 'Ramses Station'), 
+    (SELECT TOP 1 station_id FROM station WHERE name = 'Sidi Gaber')),
+
+('Alexandria - Cairo', 210, 150, 
+    (SELECT TOP 1 station_id FROM station WHERE name = 'Sidi Gaber'), 
+    (SELECT TOP 1 station_id FROM station WHERE name = 'Ramses Station')),
+
+-- القاهرة ↔ طنطا
+('Cairo - Tanta', 95, 90, 
+    (SELECT TOP 1 station_id FROM station WHERE name = 'Ramses Station'), 
+    (SELECT TOP 1 station_id FROM station WHERE name = 'Tanta Hub')),
+
+('Tanta - Cairo', 95, 90, 
+    (SELECT TOP 1 station_id FROM station WHERE name = 'Tanta Hub'), 
+    (SELECT TOP 1 station_id FROM station WHERE name = 'Ramses Station')),
+
+-- القاهرة ↔ المنصورة
+('Cairo - Mansoura', 125, 120, 
+    (SELECT TOP 1 station_id FROM station WHERE name = 'Ramses Station'), 
+    (SELECT TOP 1 station_id FROM station WHERE name = 'Mansoura Main')),
+
+('Mansoura - Cairo', 125, 120, 
+    (SELECT TOP 1 station_id FROM station WHERE name = 'Mansoura Main'), 
+    (SELECT TOP 1 station_id FROM station WHERE name = 'Ramses Station')),
+
+-- القاهرة ↔ بورسعيد
+('Cairo - Port Said', 200, 180, 
+    (SELECT TOP 1 station_id FROM station WHERE name = 'Ramses Station'), 
+    (SELECT TOP 1 station_id FROM station WHERE name = 'Port Said Terminal')),
+
+-- المنيا ↔ أسيوط
+('Minya - Asyut', 135, 110, 
+    (SELECT TOP 1 station_id FROM station WHERE name = 'Minya Station'), 
+    (SELECT TOP 1 station_id FROM station WHERE name = 'Asyut Terminal')),
+
+-- أسيوط ↔ سوهاج
+('Asyut - Sohag', 100, 80, 
+    (SELECT TOP 1 station_id FROM station WHERE name = 'Asyut Terminal'), 
+    (SELECT TOP 1 station_id FROM station WHERE name = 'Sohag Station')),
+
+-- سوهاج ↔ الأقصر
+('Sohag - Luxor', 145, 130, 
+    (SELECT TOP 1 station_id FROM station WHERE name = 'Sohag Station'), 
+    (SELECT TOP 1 station_id FROM station WHERE name = 'Luxor Central')),
+
+-- الأقصر ↔ أسوان
+('Luxor - Aswan', 215, 180, 
+    (SELECT TOP 1 station_id FROM station WHERE name = 'Luxor Central'), 
+    (SELECT TOP 1 station_id FROM station WHERE name = 'Aswan High Dam'));
+
+
+
+
+
+
+
+    INSERT INTO bus (model, capacity, plate_no)
+VALUES 
+('Mercedes-Benz Citaro', 50, 'CRO-4821'),
+('Volvo 7900 Hybrid', 48, 'VHY-1934'),
+('Scania Citywide', 52, 'SCW-7742'),
+('MAN Lion''s City', 49, 'MLC-6651'),
+('Iveco Urbanway', 47, 'URB-9023'),
+('Mercedes-Benz Tourismo', 55, 'TRM-1187'),
+('Setra S415 LE', 53, 'SET-3345'),
+('Volvo B8R', 50, 'VB8-7721'),
+('Scania Interlink', 51, 'SCI-6643'),
+('MAN Lion''s Coach', 54, 'MLC-2298'),
+('Yutong ZK6122H9', 57, 'YUT-9081'),
+('King Long XMQ6127', 56, 'KLM-4423'),
+('Golden Dragon XML6125', 55, 'GDR-1182'),
+('Hyundai Universe', 52, 'HYU-7714'),
+('Toyota Coaster', 30, 'TCO-3301'),
+('Higer KLQ6129', 54, 'HIG-7765'),
+('Ashok Leyland Janbus', 45, 'ALJ-5523'),
+('Tata Starbus Ultra', 44, 'TSU-6632'),
+('Isuzu Journey', 33, 'ISJ-1098'),
+('Ford Transit Bus', 28, 'FTB-8831'),
+('Chevrolet Microbus', 26, 'CHM-4452'),
+('Nissan Civilian', 29, 'NSC-2274'),
+('Mitsubishi Rosa', 32, 'MIR-9921'),
+('Suzuki Carry Bus', 22, 'SCB-6612'),
+('Foton BJ6123', 50, 'FTN-3387'),
+('Ankai HFF6120', 53, 'ANK-7749'),
+('Temsa Avenue', 48, 'TMS-1193'),
+('VDL Citea', 47, 'VDL-6659'),
+('Solaris Urbino 12', 49, 'SLR-4417'),
+('Alexander Dennis Enviro200', 45, 'ADE-2236');

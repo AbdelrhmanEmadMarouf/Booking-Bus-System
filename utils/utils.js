@@ -43,7 +43,10 @@ const MESSAGES = {
     YOU_ARE_NOT_ALLOW : "You are not allwoed to do this operation",
     REFRESH_TOKEN_NOT_FOUND : "Refresh Token Not Founded",
     WRONG_FILE_TYPE : "invalied uploaded file type",
-    EXPIRED_OTP_Validation : "the otp was expired"
+    EXPIRED_OTP_Validation : "the otp was expired",
+    USER_IS_NOT_DRIVER : "User Isn't Driver",
+    DRIVER_IS_NOT_FREE : "Driver isn't free",
+    BUS_IS_NOT_FREE : "Bus isn't free"
 };
 
 

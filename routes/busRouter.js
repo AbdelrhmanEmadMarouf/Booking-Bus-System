@@ -4,7 +4,7 @@ const {verifyToken} = require('../middleware/verifyToken.js');
 const {userRoles} = require('../utils/userRoles.js');
 const {allowedTo} = require('../middleware/allowedTo.js');
 
-const {createStation} = require('../controller/station.controller.js');
+const {createBus} = require('../controller/bus.controller.js');
 
 
 // router.route('/')
@@ -16,7 +16,7 @@ const {createStation} = require('../controller/station.controller.js');
 
 
 router.route('/create')
-        .post(verifyToken,allowedTo(userRoles.ADMIN,userRoles.MANGER),createStation);
+        .post(verifyToken,allowedTo(userRoles.ADMIN,userRoles.MANGER),createBus);
 
 
 module.exports = router ;

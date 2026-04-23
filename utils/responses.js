@@ -112,7 +112,35 @@ const successful = (res,data)=>{
         })
 }
 
+const userIsNotDriver = (res)=>{
+    return res
+        .status(utils.HTTP_STATUS.BAD_REQUEST)
+        .json({
+                status : utils.STATUS_TEXT.FAIL,
+                message : utils.MESSAGES.USER_IS_NOT_DRIVER ,
+                code :  utils.HTTP_STATUS.BAD_REQUEST
+        })
+}
 
+const driverIsNotFree = (res)=>{
+        return res
+        .status(utils.HTTP_STATUS.CONFLICT)
+        .json({
+                status : utils.STATUS_TEXT.FAIL,
+                message : utils.MESSAGES.DRIVER_IS_NOT_FREE ,
+                code :  utils.HTTP_STATUS.CONFLICT
+        })
+}
+
+const busIsNotFree = (res)=>{
+        return res
+        .status(utils.HTTP_STATUS.CONFLICT)
+        .json({
+                status : utils.STATUS_TEXT.FAIL,
+                message : utils.MESSAGES.BUS_IS_NOT_FREE ,
+                code :  utils.HTTP_STATUS.CONFLICT
+        })
+}
 
 module.exports = { 
     validateOtp,
@@ -123,5 +151,8 @@ module.exports = {
     tokenNotFound,
     invalidToken,
     invalidUser,
-    successful
+    successful,
+    userIsNotDriver,
+    driverIsNotFree,
+    busIsNotFree
 }

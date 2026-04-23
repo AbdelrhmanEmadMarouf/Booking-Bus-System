@@ -7,7 +7,7 @@ const validation = require('../utils/validations');
 const response = require('../utils/responses');
 
 
-const cityRoute = asyncWrapper(async(req,res,next)=>{
+const createCity = asyncWrapper(async(req,res,next)=>{
     await DB.createCity(req.body.city_name);
     response.successful(res, {city : req.body.city_name});
 })
@@ -15,5 +15,5 @@ const cityRoute = asyncWrapper(async(req,res,next)=>{
 
 
 module.exports = {
-    cityRoute
+    createCity
 }
