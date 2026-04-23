@@ -64,10 +64,64 @@ const refreshToken = (res,newAccessToken) =>{
     })
 }
 
+const tokenNotFound = (res) =>{
+        return  res.status(utils.HTTP_STATUS.UNAUTHORIZED)
+            .json({
+                    status : utils.STATUS_TEXT.FAIL,
+                    data :  {
+                        accessToken : null
+                    },
+                    message : utils.MESSAGES.REQUIRED_TOKEN,
+                    code :  utils.HTTP_STATUS.UNAUTHORIZED
+            })
+}
+
+
+const invalidToken = (res,err) =>{
+    return  res.status(utils.HTTP_STATUS.UNAUTHORIZED)
+                .json({
+                        status : utils.STATUS_TEXT.FAIL,
+                        data :  {
+                            accessToken : null
+                        },
+                        message : err.message,
+                        code :  utils.HTTP_STATUS.UNAUTHORIZED
+                })
+}
+
+const invalidUser = (res,err) =>{
+    return  res.status(utils.HTTP_STATUS.FORBIDDEN)
+                    .json({
+                            status : utils.STATUS_TEXT.FAIL,
+                            data :  {
+                                accessToken : null
+                            },
+                            message : utils.MESSAGES.YOU_ARE_NOT_ALLOW,
+                            code :  utils.HTTP_STATUS.FORBIDDEN
+                    })
+}
+
+
+const successful = (res,data)=>{
+    return res
+        .status(utils.HTTP_STATUS.OK)
+        .json({
+                status : utils.STATUS_TEXT.SUCCESS,
+                data ,
+                code :  utils.HTTP_STATUS.OK
+        })
+}
+
+
+
 module.exports = { 
     validateOtp,
     registration,
     loginSuccessful,
     loginFaild,
-    refreshToken
+    refreshToken,
+    tokenNotFound,
+    invalidToken,
+    invalidUser,
+    successful
 }

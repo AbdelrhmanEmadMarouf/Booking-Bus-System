@@ -7,6 +7,10 @@ const cors = require('cors');
 const path = require('path');
 const utils = require('./utils/utils');
 const authRouter = require('./routes/authRouter');
+const tripRouter = require('./routes/tripRouter');
+const routeRouter = require('./routes/routeRouter');
+const stationRouter = require('./routes/stationRouter');
+const cityRouter = require('./routes/cityRouter');
 
 var corsOptions = {
     origin:  'http://127.0.0.1:5500',
@@ -26,6 +30,10 @@ app.use(express.json()); //* tp parse request body into json
 
 
 app.use('/api/auth',cors(corsOptions), authRouter);
+app.use('/api/trip',cors(corsOptions), tripRouter);
+app.use('/api/route',cors(corsOptions), routeRouter);
+app.use('/api/station',cors(corsOptions), stationRouter);
+app.use('/api/city',cors(corsOptions), cityRouter);
 app.use('/uploads/',express.static(path.join(__dirname,'uploads')));
 
 

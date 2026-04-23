@@ -1,4 +1,5 @@
 const utils = require('../utils/utils');
+const response = require('../utils/responses');
 
 const allowedTo = (...roles)=>{
     return (req,res,next) =>{
@@ -6,16 +7,7 @@ const allowedTo = (...roles)=>{
         if(roles.includes(req.currentUser.role)){
         return next();
         }
-        res.status(utils.HTTP_STATUS.FORBIDDEN)
-            .json({
-                    status : utils.STATUS_TEXT.FAIL,
-                    data :  {
-                        accessToken : null
-                    },
-                    message : utils.MESSAGES.YOU_ARE_NOT_ALLOW,
-                    code :  utils.HTTP_STATUS.FORBIDDEN
-            })
-        
+        response.invalidUser(res);
     };
 }
 

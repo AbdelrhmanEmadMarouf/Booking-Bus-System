@@ -118,7 +118,7 @@ module.exports = async (newUser) => {
                 </div>
 
                 <div style="margin-top:25px; color:#94a3b8; font-size:13px;">
-                  الرمز صالح لمدة <span style="color:#fb7185; font-weight:bold;">5 دقائق</span> فقط
+                  الرمز صالح لمدة <span style="color:#fb7185; font-weight:bold;">دقيقتين</span> فقط
                 </div>
 
               </div>

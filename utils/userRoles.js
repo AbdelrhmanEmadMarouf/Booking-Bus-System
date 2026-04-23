@@ -1,7 +1,8 @@
 const userRoles = {
-    ADMIN  : "admin",
-    MANGER : "manger",
-    USER : "user"
+    ADMIN  : "ADMIN",
+    DRIVER : "DRIVER",
+    PASSENGER : "PASSENGER",
+    MANGER : "MANGER"
 };
 
 module.exports = {
