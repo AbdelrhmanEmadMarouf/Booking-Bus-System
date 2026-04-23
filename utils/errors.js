@@ -7,6 +7,12 @@ const WRONG_OTP_ERROR = appError.create(
             utils.HTTP_STATUS.NOT_FOUND
         )
 
+const EXPIRED_OTP_ERROR = appError.create(
+            utils.MESSAGES.EXPIRED_OTP_Validation,
+            utils.STATUS_TEXT.FAIL,
+            utils.HTTP_STATUS.BAD_REQUEST
+        )
+
 const WRONG_EMAIL_FORMAT = appError.create(
             utils.MESSAGES.WRONG_EMAIL_FORMAT,
             utils.STATUS_TEXT.FAIL,
@@ -36,7 +42,8 @@ const INTERNAL_SERVER_ERROR = (err)=>{
     return appError.create(
             err.message,
             utils.STATUS_TEXT.FAIL,
-            utils.HTTP_STATUS.INTERNAL_SERVER_ERROR
+            utils.HTTP_STATUS.INTERNAL_SERVER_ERROR,
+            EXPIRED_OTP_ERROR
     )
 }
 
@@ -49,5 +56,6 @@ module.exports = {
     WRONG_EMAIL_FORMAT,
     EMAIL_NOT_FOUND_ERROR,
     PASSWORD_NOT_FOUND_ERROR,
-    USER_NOT_FOUND_ERROR
+    USER_NOT_FOUND_ERROR,
+    EXPIRED_OTP_ERROR
 }

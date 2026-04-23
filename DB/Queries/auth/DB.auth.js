@@ -6,19 +6,19 @@ const {generateRefreshToken} = require('../../../utils/generateRefreshToken');
 
 const insertOtp = async(otp)=>{
         await sql.query`
-            INSERT INTO OTP_Table (OTP)
-            VALUES (${otp})
+            INSERT INTO OTP (OTP,expiration_time,created_at)
+            VALUES (${otp},2,GETUTCDATE())
         `;
 }
 
-const getOtpId = async(otp)=>{
+const getOtpData = async(otp)=>{
     const otpId =await sql.query`
-    SELECT id 
-    FROM OTP_Table 
+    SELECT id ,expiration_time,created_at
+    FROM OTP 
     WHERE OTP = ${otp}
 `;
 
-return otpId.recordset[0].id;
+return otpId.recordset[0];
 
 }
 
@@ -115,7 +115,7 @@ const deleteOTP = async(otpId)=>{
 
     //* delte the otp to garante that is won't use after this process
     await sql.query`
-            DELETE FROM OTP_Table 
+            DELETE FROM OTP 
             WHERE ID = ${otpId}
     `;
 
@@ -134,7 +134,7 @@ const getUserByEmail = async(email)=>{
 const validateOTP = async(otp,otpId)=>{
 
         const result = await sql.query`
-            SELECT OTP FROM OTP_Table
+            SELECT OTP,expiration_time,created_at FROM OTP
             WHERE ID = ${otpId} AND OTP = ${otp}
         `;
         return result.recordset[0];
@@ -151,7 +151,7 @@ const getRefreshToken  = async(userEmail)=>{
 
 module.exports = {
     insertOtp,
-    getOtpId,
+    getOtpData,
     validateOTP,
     insertUser,
     insertRefreshToken,

@@ -42,7 +42,8 @@ const MESSAGES = {
     INVALID_REFRESH_TOKEN  : "Invalid refresh token",
     YOU_ARE_NOT_ALLOW : "You are not allwoed to do this operation",
     REFRESH_TOKEN_NOT_FOUND : "Refresh Token Not Founded",
-    WRONG_FILE_TYPE : "invalied uploaded file type"
+    WRONG_FILE_TYPE : "invalied uploaded file type",
+    EXPIRED_OTP_Validation : "the otp was expired"
 };
 
 

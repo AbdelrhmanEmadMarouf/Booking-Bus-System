@@ -13,8 +13,8 @@ const registration = asyncWrapper(async(req,res,next)=>{
     validation.validateEmailFormat(newUser.email);
     const otp = await sendOPT(newUser);
     await  DB_auth.insertOtp(otp);
-    const otpId = await DB_auth.getOtpId(otp);
-    return response.registration(otpId,newUser,res);
+    const otpdata = await DB_auth.getOtpData(otp);
+    return response.registration(otpdata,newUser,res);
 
 });
 

@@ -57,6 +57,7 @@ const validateOTP = async(otp,otpId,req)=>{
 
     const result = await DB_auth.validateOTP(otp,otpId);
 
+
     if(result.length === 0){
 
     /*
@@ -67,9 +68,26 @@ const validateOTP = async(otp,otpId,req)=>{
     if (req.file && fs.existsSync(req.file.path)) {
         fs.unlinkSync(req.file.path);
     }
-
         throw errors.WRONG_OTP_ERROR;
     }
+
+    const now = new Date();
+    const createdTime = new Date(result.created_at);
+    const expiryTime = new Date(createdTime.getTime() + result.expiration_time * 60000);
+    
+
+    if (now > expiryTime) {
+
+        if (req.file && fs.existsSync(req.file.path)) {
+            fs.unlinkSync(req.file.path);
+        }
+
+        throw errors.EXPIRED_OTP_ERROR;
+    }
+
+    return true;
+
+
 }
 
 
