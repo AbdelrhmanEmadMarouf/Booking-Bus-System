@@ -16,6 +16,7 @@ const verifyToken = async(req,res,next)=>{
     //*if it doesn't throw an exception so it means that the validation is valid
     const currentUser = jwt.verify(token,process.env.SECRET_KEY);
     req.currentUser = currentUser;
+    req.user.id = currentUser.id
     next();
 
     }catch(err){

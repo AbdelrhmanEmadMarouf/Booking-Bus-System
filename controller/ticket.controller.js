@@ -22,7 +22,6 @@ const createTicket = asyncWrapper(async(req,res,next)=>{
     await DB_Ticket.createTicket(booking_date,trip_id,user_id,seat_no);
     response.successful(res,{booking_date,trip_id,user_id,seat_no});
 
-
 })
 
 

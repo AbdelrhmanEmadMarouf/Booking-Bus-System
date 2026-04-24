@@ -13,6 +13,7 @@ const stationRouter = require('./routes/stationRouter');
 const cityRouter = require('./routes/cityRouter');
 const busRouter = require('./routes/busRouter');
 const ticketRouter = require('./routes/ticketRouter');
+const paymentRouter = require('./routes/paymentRouter');
 
 var corsOptions = {
     origin:  'http://127.0.0.1:5500',
@@ -38,6 +39,7 @@ app.use('/api/route',cors(corsOptions), routeRouter);
 app.use('/api/station',cors(corsOptions), stationRouter);
 app.use('/api/city',cors(corsOptions), cityRouter);
 app.use('/api/bus',cors(corsOptions), busRouter);
+app.use('/api/payment',cors(corsOptions), paymentRouter);
 app.use('/uploads/',express.static(path.join(__dirname,'uploads')));
 
 
