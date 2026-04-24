@@ -7,5 +7,5 @@ module.exports = (payload)=>{
     return jwt.sign(
         payload,
         process.env.SECRET_KEY,
-        { expiresIn: '1m' });
+        { expiresIn: '5m' });
 }

@@ -16,14 +16,8 @@ const getuserById = async(userId)=>{
 const getDriverTrips = async(userId)=>{
 
         const userData = await sql.query`
-                SELECT 
-                    t.trip_id,
-                    t.scheduled_departure_date,
-                    t.scheduled_arrival_date
-                FROM trip t
-                JOIN users u 
-                    ON t.driver_id = u.user_id
-                WHERE t.driver_id = ${userId};
+            FROM trip t
+            WHERE t.driver_id = ${userId};
         `;
 
 

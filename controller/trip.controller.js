@@ -15,22 +15,22 @@ const createTrip = asyncWrapper(async(req,res,next)=>{
     const bus_id = req.body.bus_id;
     const driver_id = req.body.driver_id;
 
-    if(!await validation.isBusFree(scheduled_arrival_date,scheduled_departure_date,bus_id)){
+    if(!await validation.isDriver(driver_id)){
+        return response.userIsNotDriver(res);
+    }
+
+    if(!await validation.isBusFree(scheduled_departure_date,scheduled_arrival_date,bus_id)){
         return response.busIsNotFree(res);
     }
     
 
-    // if(!await validation.isDriver(driver_id)){
-    //     return response.userIsNotDriver(res);
-    // }
-
-    // if(!await validation.isDriverFree(scheduled_arrival_date,scheduled_departure_date,driver_id)){
-    //     return response.driverIsNotFree(res);
-    // }
+    if(!await validation.isDriverFree(scheduled_departure_date,scheduled_arrival_date,driver_id)){
+        return response.driverIsNotFree(res);
+    }
 
 
-    // await DB_Trip.createTrip(routeName,scheduled_arrival_date,scheduled_departure_date,bus_id,driver_id);
-    // response.successful(res,{routeName,scheduled_arrival_date,scheduled_departure_date,bus_id,driver_id});
+    await DB_Trip.createTrip(routeName,scheduled_arrival_date,scheduled_departure_date,bus_id,driver_id);
+    response.successful(res,{routeName,scheduled_arrival_date,scheduled_departure_date,bus_id,driver_id});
 
 })
 

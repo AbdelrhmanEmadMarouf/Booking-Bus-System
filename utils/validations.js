@@ -96,46 +96,49 @@ const isDriver = async(user_id)=>{
     return DB_user.isUserDriver(user_id);
 }
 
-const isDriverFree = async(startTime,endTime,driver_id)=>{
+const isDriverFree = async (startTime, endTime, driver_id) => {
 
     const driverData = await DB_user.getDriverTrips(driver_id);
 
-    let isDriverFree = true;
+    const newStart = new Date(startTime);
+    const newEnd = new Date(endTime);
 
-    //*is startTime and End Time is Free To user?
-    driverData.recordset.forEach((it)=>{
-        if(it.scheduled_departure_date >= startTime && it.scheduled_arrival_date <=endTime){
-            isDriverFree = false ;
+    for (const it of driverData.recordset) {
+
+        const tripStart = new Date(it.scheduled_departure_date);
+        const tripEnd = new Date(it.scheduled_arrival_date);
+
+        if (newStart < tripEnd && newEnd > tripStart) {
+            return false;
         }
-    })
+    }
 
-}
+    return true;
+};
 
 
 
 const isBusFree = async(startTime,endTime,bus_id)=>{
 
-    
-
     const busData = await DB_bus.getBusTrips(bus_id);
 
-    
-
-    let isBusFree = true;
-
-    //*is startTime and End Time is Free To user?
-    busData.recordset.forEach((it)=>{
-            console.log(it.scheduled_departure_date);
-            console.log(startTime);
-            console.log("---------------");
-        if(it.scheduled_departure_date >= startTime && it.scheduled_arrival_date <=endTime){
-            isBusFree = false ;
-            console.log(isBusFree);
-        }
-    })
+    const newTripStart = new Date(startTime);
+    const newTripEnd = new Date(endTime);
 
 
-    return isBusFree;
+for (const it of busData.recordset) {
+
+    const tripStart = new Date(it.scheduled_departure_date);
+    const tripEnd = new Date(it.scheduled_arrival_date);
+
+    if (newTripStart < tripEnd && newTripEnd > tripStart) {
+
+        return false;
+    }
+}
+
+return true;
+
 
 }
 

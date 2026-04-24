@@ -46,7 +46,8 @@ const MESSAGES = {
     EXPIRED_OTP_Validation : "the otp was expired",
     USER_IS_NOT_DRIVER : "User Isn't Driver",
     DRIVER_IS_NOT_FREE : "Driver isn't free",
-    BUS_IS_NOT_FREE : "Bus isn't free"
+    BUS_IS_NOT_FREE : "Bus isn't free",
+    INVALID_TRIP_TIME : "Invalid Trip Time"
 };
 
 
