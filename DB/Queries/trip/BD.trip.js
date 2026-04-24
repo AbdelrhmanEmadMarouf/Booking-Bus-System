@@ -27,8 +27,29 @@ const createTrip = async (
 };
 
 
+const getTrips = async()=>{
+    const trips =   await sql.query`
+        SELECT * 
+        FROM trip
+    `
+    return trips;
+}
+
+const getTrip = async(tripId)=>{
+    const trip =   await sql.query`
+        SELECT * 
+        FROM trip
+        WHERE trip_id = ${tripId}
+    `
+    return trip.recordset[0];
+}
+
+
+
 
 
 module.exports = {
     createTrip,
+    getTrips,
+    getTrip
 }

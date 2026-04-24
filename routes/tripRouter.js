@@ -4,19 +4,20 @@ const {verifyToken} = require('../middleware/verifyToken.js');
 const {userRoles} = require('../utils/userRoles.js');
 const {allowedTo} = require('../middleware/allowedTo.js');
 
-const {createTrip} = require('../controller/trip.controller');
+const {createTrip, getTrips,getTrip} = require('../controller/trip.controller');
 
 
-// router.route('/')
-//         .get(verifyToken,allowedTo(userRoles.MANGER,userRoles.ADMIN),coursesController.getAllCourses)   
-//         .post(verifyToken,allowedTo(userRoles.ADMIN),
-//             validationSchema.validationSchema()
-//         ,
-//     coursesController.createCourse);
 
 
 router.route('/create')
         .post(verifyToken,allowedTo(userRoles.ADMIN,userRoles.MANGER),createTrip);
+
+router.route('/')
+        .get(verifyToken,allowedTo(userRoles.ADMIN,userRoles.MANGER,userRoles.PASSENGER),getTrips);
+
+router.route('/:tripId')
+        .get(verifyToken,allowedTo(userRoles.ADMIN,userRoles.MANGER,userRoles.PASSENGER),getTrip);
+
 
 
 module.exports = router ;

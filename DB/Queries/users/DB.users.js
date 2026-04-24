@@ -19,8 +19,6 @@ const getDriverTrips = async(userId)=>{
             FROM trip t
             WHERE t.driver_id = ${userId};
         `;
-
-
         return userData;
 
 }

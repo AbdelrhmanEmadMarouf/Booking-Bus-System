@@ -122,6 +122,16 @@ const userIsNotDriver = (res)=>{
         })
 }
 
+const invalidTripTime = (res)=>{
+    return res
+        .status(utils.HTTP_STATUS.BAD_REQUEST)
+        .json({
+                status : utils.STATUS_TEXT.FAIL,
+                message : utils.MESSAGES.INVALID_TRIP_TIME ,
+                code :  utils.HTTP_STATUS.BAD_REQUEST
+        })
+}
+
 const driverIsNotFree = (res)=>{
         return res
         .status(utils.HTTP_STATUS.CONFLICT)
@@ -141,18 +151,41 @@ const busIsNotFree = (res)=>{
                 code :  utils.HTTP_STATUS.CONFLICT
         })
 }
+const tripNotExist = (res)=>{
+        return res
+        .status(utils.HTTP_STATUS.NOT_FOUND)
+        .json({
+                status : utils.STATUS_TEXT.FAIL,
+                message : utils.MESSAGES.TRIP_NOT_EXIST ,
+                code :  utils.HTTP_STATUS.NOT_FOUND
+        })
+}
+
+const seatNotFree = (res)=>{
+        return res
+        .status(utils.HTTP_STATUS.BAD_REQUEST)
+        .json({
+                status : utils.STATUS_TEXT.FAIL,
+                message : utils.MESSAGES.SEAT_NOT_FREE ,
+                code :  utils.HTTP_STATUS.BAD_REQUEST
+        })
+}
+
 
 module.exports = { 
-    validateOtp,
-    registration,
-    loginSuccessful,
-    loginFaild,
-    refreshToken,
-    tokenNotFound,
-    invalidToken,
-    invalidUser,
-    successful,
-    userIsNotDriver,
-    driverIsNotFree,
-    busIsNotFree
+        validateOtp,
+        registration,
+        loginSuccessful,
+        loginFaild,
+        refreshToken,
+        tokenNotFound,
+        invalidToken,
+        invalidUser,
+        successful,
+        userIsNotDriver,
+        driverIsNotFree,
+        busIsNotFree,
+        invalidTripTime,
+        tripNotExist,
+        seatNotFree
 }

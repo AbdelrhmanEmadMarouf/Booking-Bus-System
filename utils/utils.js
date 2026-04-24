@@ -47,7 +47,9 @@ const MESSAGES = {
     USER_IS_NOT_DRIVER : "User Isn't Driver",
     DRIVER_IS_NOT_FREE : "Driver isn't free",
     BUS_IS_NOT_FREE : "Bus isn't free",
-    INVALID_TRIP_TIME : "Invalid Trip Time"
+    INVALID_TRIP_TIME : "Invalid Trip Time",
+    TRIP_NOT_EXIST : "Trip Not Exist",
+    SEAT_NOT_FREE  : "Seat Not Free"
 };
 
 

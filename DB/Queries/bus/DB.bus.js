@@ -24,10 +24,23 @@ const getBusTrips = async(busId)=>{
 }
 
 
+const getBusId = async(tripId)=>{
+
+    const busId = await sql.query`
+        SELECT bus_id 
+        FROM trip 
+        WHERE trip_id = ${tripId};
+    `;
+        return busId.recordset[0].bus_id;
+
+}
+
+
 
 
 
 module.exports = {
     createBus,
-    getBusTrips
+    getBusTrips,
+    getBusId
 }

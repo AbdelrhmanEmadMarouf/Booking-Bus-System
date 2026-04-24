@@ -3,6 +3,9 @@ const errors = require('./errors');
 const DB_auth = require('../DB/Queries/auth/DB.auth');
 const DB_user = require('../DB/Queries/users/DB.users');
 const DB_bus = require('../DB/Queries/bus/DB.bus');
+const DB_trip = require('../DB/Queries/trip/BD.trip');
+const DB_seat = require('../DB/Queries/seate/DB.seat');
+const {seatStatus} = require('../utils/seatsStatus')
 const bcrypt = require('bcrypt');
 const fs = require('fs');
 
@@ -116,8 +119,6 @@ const isDriverFree = async (startTime, endTime, driver_id) => {
     return true;
 };
 
-
-
 const isBusFree = async(startTime,endTime,bus_id)=>{
 
     const busData = await DB_bus.getBusTrips(bus_id);
@@ -142,6 +143,33 @@ return true;
 
 }
 
+const isTripExist = async(tripId)=>{
+
+    
+    const trip = await DB_trip.getTrip(tripId);
+    if(!trip){
+        return false;
+    }
+    return true;
+
+}
+
+const isSeatFree = async(seatNumber,tripId)=>{
+
+    const busId = await DB_bus.getBusId(tripId);
+    const seat = await DB_seat.getSeat(busId,seatNumber);
+
+    if(!seat){
+        return false;
+    }
+
+    if(seat.status == seatStatus.RESERVED){
+        return false;
+    }
+
+    return true;
+
+}
 
 
 
@@ -154,5 +182,7 @@ module.exports = {
     validateOTP,
     isDriverFree,
     isDriver,
-    isBusFree
+    isBusFree,
+    isTripExist,
+    isSeatFree
 }

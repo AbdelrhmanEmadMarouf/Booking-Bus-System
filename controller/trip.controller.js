@@ -1,7 +1,4 @@
 const asyncWrapper = require('../middleware/asyncWrapper');
-const generateJWT = require('../utils/generateJWT');
-const {generateRefreshToken} = require('../utils/generateRefreshToken');
-const sendOPT = require('../utils/senOTP');
 const DB_Trip = require('../DB/Queries/trip/BD.trip');
 const validation = require('../utils/validations');
 const response = require('../utils/responses');
@@ -17,6 +14,10 @@ const createTrip = asyncWrapper(async(req,res,next)=>{
 
     if(!await validation.isDriver(driver_id)){
         return response.userIsNotDriver(res);
+    }
+
+    if (new Date(scheduled_arrival_date) <= new Date(scheduled_departure_date)) {
+        return response.invalidTripTime(res);
     }
 
     if(!await validation.isBusFree(scheduled_departure_date,scheduled_arrival_date,bus_id)){
@@ -35,7 +36,23 @@ const createTrip = asyncWrapper(async(req,res,next)=>{
 })
 
 
+const getTrips = asyncWrapper(async(req,res,next)=>{
+    const trips = await DB_Trip.getTrips();
+    response.successful(res,{trips});
+})
+
+const getTrip = asyncWrapper(async(req,res,next)=>{
+
+    const tripId =  req.params.tripId;
+
+    const trip = await DB_Trip.getTrip(tripId);
+    response.successful(res,{trip});
+
+})
+
 
 module.exports = {
-    createTrip
+    createTrip,
+    getTrips,
+    getTrip
 }
