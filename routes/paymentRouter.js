@@ -13,7 +13,9 @@ router.route('/')
         .post(verifyToken,allowedTo(userRoles.PASSENGER),createPayment );
 
 router.route('/callback')
-        .post(paymentCallback );
+        .post(paymentCallback )
+        .get(paymentCallback)
+
 
 
 module.exports = router ;
