@@ -20,10 +20,24 @@ seat_no
 };
 
 
+const getTicket = async(userId ,tripId)=>{
+    const ticket = await sql.query`
+            SELECT *
+            FROM TICKET
+            WHERE trip_id = ${tripId} 
+            AND user_id = ${userId}
+    `;
+
+    return ticket.recordset[0]
+
+}
+
+
 
 
 
 
 module.exports = {
-    createTicket
+    createTicket,
+    getTicket
 }

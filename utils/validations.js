@@ -5,6 +5,7 @@ const DB_user = require('../DB/Queries/users/DB.users');
 const DB_bus = require('../DB/Queries/bus/DB.bus');
 const DB_trip = require('../DB/Queries/trip/BD.trip');
 const DB_seat = require('../DB/Queries/seate/DB.seat');
+const DB_Ticket = require('../DB/Queries/ticket/DB.ticket');
 const DB_payment = require('../DB/Queries/payment/DB.payment');
 const {seatStatus} = require('../utils/seatsStatus')
 const bcrypt = require('bcrypt');
@@ -185,6 +186,30 @@ const isTransactionExist = async(transactionId)=>{
 
 }
 
+const hasEnoughBalance = async(userId,tripPrice)=>{
+
+    const userData = await DB_user.getuserById(userId);
+    const balance = userData.wallet_balance;
+
+    if(balance>=tripPrice){
+        return true
+    }
+
+    return false
+
+}
+
+const isUserBookTrip = async(userId,tripId)=>{
+
+    const ticket = await DB_Ticket.getTicket(userId,tripId);
+
+    if(!ticket){
+        return false
+    }
+    return true
+
+}
+
 
 
 
@@ -200,5 +225,7 @@ module.exports = {
     isBusFree,
     isTripExist,
     isSeatFree,
-    isTransactionExist
+    isTransactionExist,
+    hasEnoughBalance,
+    isUserBookTrip
 }

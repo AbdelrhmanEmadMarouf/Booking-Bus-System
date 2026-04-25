@@ -171,6 +171,25 @@ const seatNotFree = (res)=>{
         })
 }
 
+const notEnoughBalance = (res)=>{
+        return res
+        .status(utils.HTTP_STATUS.BAD_REQUEST)
+        .json({
+                status : utils.STATUS_TEXT.FAIL,
+                message : utils.MESSAGES.NOT_ENOUGH_BALANCE ,
+                code :  utils.HTTP_STATUS.BAD_REQUEST
+        })
+}
+const UserBookedTripAlready = (res)=>{
+        return res
+        .status(utils.HTTP_STATUS.BAD_REQUEST)
+        .json({
+                status : utils.STATUS_TEXT.FAIL,
+                message : utils.MESSAGES.USER_BOOKED_TRIP_ALREADY ,
+                code :  utils.HTTP_STATUS.BAD_REQUEST
+        })
+}
+
 
 module.exports = { 
         validateOtp,
@@ -187,5 +206,7 @@ module.exports = {
         busIsNotFree,
         invalidTripTime,
         tripNotExist,
-        seatNotFree
+        seatNotFree,
+        notEnoughBalance,
+        UserBookedTripAlready
 }

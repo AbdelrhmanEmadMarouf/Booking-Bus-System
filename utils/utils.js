@@ -49,7 +49,9 @@ const MESSAGES = {
     BUS_IS_NOT_FREE : "Bus isn't free",
     INVALID_TRIP_TIME : "Invalid Trip Time",
     TRIP_NOT_EXIST : "Trip Not Exist",
-    SEAT_NOT_FREE  : "Seat Not Free"
+    SEAT_NOT_FREE  : "Seat Not Free",
+    NOT_ENOUGH_BALANCE : "Not Enough Balance",
+    USER_BOOKED_TRIP_ALREADY : "User is Already Booked The Trip"
 };
 
 

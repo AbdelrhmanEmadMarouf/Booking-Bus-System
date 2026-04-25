@@ -1,5 +1,7 @@
 const asyncWrapper = require('../middleware/asyncWrapper');
 const DB_Ticket = require('../DB/Queries/ticket/DB.ticket');
+const DB_User = require('../DB/Queries/users/DB.users');
+const DB_trip = require('../DB/Queries/trip/BD.trip');
 const validation = require('../utils/validations');
 const response = require('../utils/responses');
 
@@ -19,7 +21,24 @@ const createTicket = asyncWrapper(async(req,res,next)=>{
         return response.seatNotFree(res);
     }
 
+    if(await validation.isUserBookTrip(user_id,trip_id)){
+        return response.UserBookedTripAlready(res);
+    }
+
+
+    const trip = await DB_trip.getTrip(trip_id);
+    const tripPrice = trip.price;
+    
+
+
+    if(!await validation.hasEnoughBalance(user_id,tripPrice)){
+        return response.notEnoughBalance(res);
+    }
+
+
     await DB_Ticket.createTicket(booking_date,trip_id,user_id,seat_no);
+    await DB_User.withdrawFromWallet(user_id,tripPrice);
+
     response.successful(res,{booking_date,trip_id,user_id,seat_no});
 
 })

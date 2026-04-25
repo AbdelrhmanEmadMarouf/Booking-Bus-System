@@ -40,7 +40,7 @@ const getUserBalance = async(userId)=>{
             SELECT wallet_balance 
             FROM USERS 
             WHERE user_id = ${userId}
-        `;
+        `; 
         return Number(balance.recordset[0].wallet_balance);
 }
 
@@ -56,6 +56,19 @@ const addBalance = async(userId,amount)=>{
         SET wallet_balance = ${newBalance}
         WHERE user_id = ${userId}
     `;
+}
+
+
+const withdrawFromWallet = async(userId,amount)=>{
+
+    const balance = await getUserBalance(userId);
+    const newBalance = balance - amount;
+
+    await sql.query`
+        UPDATE Users 
+        SET wallet_balance = ${newBalance}
+        WHERE user_id = ${userId}
+    `;
 
 
 }
@@ -64,5 +77,6 @@ module.exports = {
     getuserById,
     getDriverTrips,
     isUserDriver,
-    addBalance
+    addBalance,
+    withdrawFromWallet
 }
