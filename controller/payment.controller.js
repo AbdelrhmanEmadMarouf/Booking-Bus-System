@@ -120,31 +120,28 @@ async function createPayment(req, res) {
 async function paymentCallback(req, res) {
     try {
 
-        console.log(req);
+        const obj = req.body?.obj || req.query;
 
-        const data = req.method === "POST" ? req.body : req.query;
-
-        //*if the payment faild return to the paymob that the request is success 
-        //*but we know that the payment faild
-
-        
         const isSuccess =
-            data.success === 'true' ||
-            data.success === true ||
-            data.obj?.success === true;
+            obj.success === true ||
+            obj.success === 'true';
 
         if (!isSuccess) {
             return res.sendStatus(200);
         }
 
+        const transactionId = obj.id;
+        const amountCents = obj.amount_cents;
+        const merchantOrderId = obj.order?.merchant_order_id || req.query.merchant_order_id;
 
+        if (!merchantOrderId) {
+            console.log("No merchantOrderId");
+            return res.sendStatus(200);
+        }
 
-        const transactionId = data.obj.id;
-        const amountCents = data.obj.amount_cents;
-        const merchantOrderId = data.obj.order.merchant_order_id;
         const userId = merchantOrderId.split('_')[1];
 
-        if(await validation.isTransactionExist(transactionId)){
+        if (await validation.isTransactionExist(transactionId)) {
             return res.sendStatus(200);
         }
 
@@ -157,16 +154,14 @@ async function paymentCallback(req, res) {
         );
 
         await DB_user.addBalance(userId, amountCents);
-        
 
         res.sendStatus(200);
 
     } catch (error) {
-        console.error("Callback Error:", error.message);
+        console.error("Callback Error FULL:", error);
         res.sendStatus(500);
     }
 }
-
 module.exports = { createPayment ,paymentCallback};
 
             
