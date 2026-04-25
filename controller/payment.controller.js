@@ -2,6 +2,9 @@ const axios = require('axios');
 const DB_user = require('../DB/Queries/users/DB.users');
 const DB_payment = require('../DB/Queries/payment/DB.payment');
 const validation = require('../utils/validations');
+const asyncWrapper = require('../middleware/asyncWrapper');
+const response = require('../utils/responses');
+
 
 const PAYMOB_API_KEY = process.env.PAYMOB_API_KEY;
 const PAYMOB_INTEGRATION_ID = process.env.PAYMOB_INTEGRATION_ID;
@@ -116,7 +119,6 @@ async function createPayment(req, res) {
 }
 
 
-
 async function paymentCallback(req, res) {
     try {
 
@@ -166,6 +168,17 @@ async function paymentCallback(req, res) {
         res.sendStatus(500);
     }
 }
-module.exports = { createPayment ,paymentCallback};
+
+
+const getTotalRevenue = asyncWrapper(async(req,res,next)=>{
+
+    const totalRevenue = await DB_payment.getTotalRevenue();
+    response.successful(res,{totalRevenue});
+    
+
+})
+
+
+module.exports = { createPayment ,paymentCallback,getTotalRevenue};
 
             

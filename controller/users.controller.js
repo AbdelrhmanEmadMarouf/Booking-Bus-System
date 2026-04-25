@@ -6,6 +6,7 @@ const response = require('../utils/responses');
 const getPassengers = asyncWrapper(async(req,res,next)=>{
 
     const todayPassengers =  await DB_users.getPassengersToday();
+    
     response.successful(res,{todayPassengers});
     
 

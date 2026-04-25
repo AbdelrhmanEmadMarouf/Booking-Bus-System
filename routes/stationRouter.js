@@ -7,13 +7,6 @@ const {allowedTo} = require('../middleware/allowedTo.js');
 const {createStation} = require('../controller/station.controller.js');
 
 
-// router.route('/')
-//         .get(verifyToken,allowedTo(userRoles.MANGER,userRoles.ADMIN),coursesController.getAllCourses)   
-//         .post(verifyToken,allowedTo(userRoles.ADMIN),
-//             validationSchema.validationSchema()
-//         ,
-//     coursesController.createCourse);
-
 
 router.route('/create')
         .post(verifyToken,allowedTo(userRoles.ADMIN,userRoles.MANGER),createStation);
