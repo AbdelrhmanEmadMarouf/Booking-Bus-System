@@ -130,11 +130,11 @@ async function paymentCallback(req, res) {
             return res.sendStatus(200);
         }
 
-        const transactionId = Number(data.obj?.id || data.id);
-        let amountCents = obj.amount_cents;
+        const transactionId = Number(obj.id);
+        let amount = obj.amount_cents;
         const merchantOrderId = obj.order?.merchant_order_id || req.query.merchant_order_id;
 
-        amountCents = Number(amountCents)/100;
+        amount = Number(amount)/100;
 
         if (!merchantOrderId) {
             console.log("No merchantOrderId");
@@ -150,12 +150,12 @@ async function paymentCallback(req, res) {
         await DB_payment.addPayment(
             "card",
             new Date(),
-            amountCents,
+            amount,
             userId,
             transactionId
         );
 
-        await DB_user.addBalance(userId, amountCents);
+        await DB_user.addBalance(userId, amount);
 
         res.sendStatus(200);
 
