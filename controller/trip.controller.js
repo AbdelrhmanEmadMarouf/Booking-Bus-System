@@ -61,11 +61,11 @@ const endTrip = asyncWrapper(async(req,res,next)=>{
 
     const tripId =  req.params.tripId;
 
-    const busId = await DB_bus.getBusId(tripId);
-    
     if(!await validation.isTripExist(tripId)){
         response.tripNotExist(res);
     }
+
+    const busId = await DB_bus.getBusId(tripId);
 
     await DB_Ticket.daleteTicketByTripId(tripId);
     await DB_Seat.releaseSeats(tripId,busId);
