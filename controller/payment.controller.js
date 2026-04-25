@@ -119,6 +119,9 @@ async function createPayment(req, res) {
 
 async function paymentCallback(req, res) {
     try {
+
+        console.log(req);
+
         const data = req.method === "POST" ? req.body : req.query;
 
         //*if the payment faild return to the paymob that the request is success 
