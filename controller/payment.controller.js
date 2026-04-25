@@ -78,7 +78,7 @@ async function createPaymentKey(authToken, orderId, amount ,user) {
 async function createPayment(req, res) {
     
     try {
-        const { amount } = req.body;
+        let { amount } = req.body;
         const userId = req.user.id; //* added
         const user = await DB_user.getuserById(userId);
 
