@@ -16,13 +16,6 @@ const getPayment = async(transactionId)=>{
 
 const addPayment = async(paymentMethod,paymentDate,amount,userId,transactionId)=>{
 
-            console.log("DEBUG INSERT =>", {
-                paymentMethod,
-                paymentDate,
-                amount,
-                userId,
-                transactionId
-});
 
     await sql.query`
         INSERT INTO payment (payment_method, payment_date, amount, user_id, transaction_id)
