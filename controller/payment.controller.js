@@ -105,7 +105,7 @@ async function createPayment(req, res) {
 
 
         
-        const iframeUrl = `https://accept.paymobsolutions.com/api/acceptance/iframes/${PAYMOB_IFRAME_ID}?payment_token=${paymentKey}`;
+    const iframeUrl = `https://accept.paymob.com/api/acceptance/iframes/${PAYMOB_IFRAME_ID}?payment_token=${paymentKey}`;
 
 
         res.status(200).json({ success: true, iframeUrl });
