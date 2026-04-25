@@ -78,7 +78,7 @@ async function createPaymentKey(authToken, orderId, amount ,user) {
 async function createPayment(req, res) {
     
     try {
-        let { amount } = req.body;
+        const { amount } = req.body;
         const userId = req.user.id; //* added
         const user = await DB_user.getuserById(userId);
 
@@ -86,17 +86,17 @@ async function createPayment(req, res) {
             return res.status(404).json({ error: "User not found" });
         }
 
-        amount = Number(amount);
+        const amountNumber = Number(amount);
 
-        if (!amount || isNaN(amount) || amount <= 0) {
+        if (!amount || isNaN(amountNumber) || amountNumber <= 0) {
             return res.status(400).json({ error: "Invalid amount" });
         }
 
-        if (amount > 50000) {
+        if (amountNumber > 50000) {
             return res.status(400).json({ error: "Amount too large" });
         }
 
-        
+        const amountCents = Math.round(amountNumber * 100);
 
 
         const authToken = await getAuthToken();
@@ -131,8 +131,10 @@ async function paymentCallback(req, res) {
         }
 
         const transactionId = Number(data.obj?.id || data.id);
-        const amountCents = obj.amount_cents;
+        let amountCents = obj.amount_cents;
         const merchantOrderId = obj.order?.merchant_order_id || req.query.merchant_order_id;
+
+        amountCents = Number(amountCents)/100;
 
         if (!merchantOrderId) {
             console.log("No merchantOrderId");
