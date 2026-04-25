@@ -71,6 +71,13 @@ const getTrip = async(tripId)=>{
     `
     return trip.recordset[0];
 }
+const deleteTrip = async(tripId)=>{
+    await sql.query`
+            DELETE FROM trip 
+            WHERE trip_id = ${tripId}
+    `
+    
+}
 
 
 
@@ -79,5 +86,6 @@ const getTrip = async(tripId)=>{
 module.exports = {
     createTrip,
     getTrips,
-    getTrip
+    getTrip,
+    deleteTrip
 }

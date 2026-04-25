@@ -14,7 +14,6 @@ seat_no
     `;
 };
 
-
 const getTicket = async(userId ,tripId)=>{
 
     const ticket = await sql.query`
@@ -28,13 +27,20 @@ const getTicket = async(userId ,tripId)=>{
     return ticket.recordset[0]
 
 }
+const daleteTicketByTripId = async(tripId)=>{
+
+    await sql.query`
+            DELETE FROM TICKET 
+            WHERE trip_id = ${tripId}
+    `;
 
 
-
+}
 
 
 
 module.exports = {
     createTicket,
-    getTicket
+    getTicket,
+    daleteTicketByTripId
 }

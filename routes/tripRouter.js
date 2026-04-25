@@ -4,13 +4,16 @@ const {verifyToken} = require('../middleware/verifyToken.js');
 const {userRoles} = require('../utils/userRoles.js');
 const {allowedTo} = require('../middleware/allowedTo.js');
 
-const {createTrip, getTrips,getTrip} = require('../controller/trip.controller');
+const {createTrip, getTrips,getTrip,endTrip} = require('../controller/trip.controller');
 
 
 
 
 router.route('/create')
         .post(verifyToken,allowedTo(userRoles.ADMIN,userRoles.MANGER),createTrip);
+
+router.route('/end/:tripId')
+        .post(verifyToken,allowedTo(userRoles.ADMIN,userRoles.MANGER,userRoles.DRIVER),endTrip);
 
 router.route('/')
         .get(verifyToken,allowedTo(userRoles.ADMIN,userRoles.MANGER,userRoles.PASSENGER),getTrips);

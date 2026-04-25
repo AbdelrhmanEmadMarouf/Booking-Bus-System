@@ -207,6 +207,15 @@ const userIsNotPassenger = (res)=>{
                 code :  utils.HTTP_STATUS.BAD_REQUEST
         })
 }
+const endTrip = (res)=>{
+        return res
+        .status(utils.HTTP_STATUS.ACCEPTED)
+        .json({
+                status : utils.STATUS_TEXT.SUCCESS,
+                message : utils.MESSAGES.TRIP_DELETED ,
+                code :  utils.HTTP_STATUS.ACCEPTED
+        })
+}
 
 
 module.exports = { 
@@ -228,5 +237,6 @@ module.exports = {
         notEnoughBalance,
         UserBookedTripAlready,
         userNotExist,
-        userIsNotPassenger
+        userIsNotPassenger,
+        endTrip
 }

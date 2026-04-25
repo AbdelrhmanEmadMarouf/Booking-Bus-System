@@ -54,11 +54,19 @@ const initializeTripSeats = async (busId, tripId) => {
         `;
 };
 
+const releaseSeats = async(tripId,busId)=>{
+        await sql.query`
+                DELETE FROM seat 
+                WHERE trip_id = ${tripId} 
+                AND bus_id = ${busId}
+                `;
+}
 
 
 
 module.exports = {
         getSeat,
         bookSeat,
-        initializeTripSeats
+        initializeTripSeats,
+        releaseSeats
 }

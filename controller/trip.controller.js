@@ -1,6 +1,8 @@
 const asyncWrapper = require('../middleware/asyncWrapper');
 const DB_Trip = require('../DB/Queries/trip/BD.trip');
+const DB_Ticket = require('../DB/Queries/ticket/DB.ticket');
 const DB_Seat = require('../DB/Queries/seate/DB.seat');
+const DB_bus = require('../DB/Queries/bus/DB.bus');
 const validation = require('../utils/validations');
 const response = require('../utils/responses');
 
@@ -55,9 +57,28 @@ const getTrip = asyncWrapper(async(req,res,next)=>{
 
 })
 
+const endTrip = asyncWrapper(async(req,res,next)=>{
+
+    const tripId =  req.params.tripId;
+
+    const busId = await DB_bus.getBusId(tripId);
+    
+
+    await DB_Ticket.daleteTicketByTripId(tripId);
+
+    await DB_Seat.releaseSeats(tripId,busId);
+
+    await DB_Trip.deleteTrip(tripId);
+
+
+    response.endTrip(res);
+
+})
+
 
 module.exports = {
     createTrip,
     getTrips,
-    getTrip
+    getTrip,
+    endTrip
 }
