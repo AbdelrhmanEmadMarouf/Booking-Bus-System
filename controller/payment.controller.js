@@ -147,6 +147,8 @@ async function paymentCallback(req, res) {
             return res.sendStatus(200);
         }
 
+
+
         await DB_payment.addPayment(
             "card",
             new Date(),
