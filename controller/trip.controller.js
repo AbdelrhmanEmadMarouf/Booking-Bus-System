@@ -47,6 +47,10 @@ const getTrips = asyncWrapper(async(req,res,next)=>{
     const trips = await DB_Trip.getTrips();
     response.successful(res,{trips});
 })
+const getTripsToday = asyncWrapper(async(req,res,next)=>{
+    const trips = await DB_Trip.getTripsToday();
+    response.successful(res,{trips});
+})
 
 const getTrip = asyncWrapper(async(req,res,next)=>{
 
@@ -60,9 +64,14 @@ const getTrip = asyncWrapper(async(req,res,next)=>{
 const endTrip = asyncWrapper(async(req,res,next)=>{
 
     const tripId =  req.params.tripId;
+    const driverId =  req.user.id;
 
     if(!await validation.isTripExist(tripId)){
-        response.tripNotExist(res);
+        return response.tripNotExist(res);
+    }
+
+    if(!await validation.isTripDriver(tripId,driverId)){
+        return response.notTripDriver(res);
     }
 
     const busId = await DB_bus.getBusId(tripId);
@@ -81,5 +90,6 @@ module.exports = {
     createTrip,
     getTrips,
     getTrip,
-    endTrip
+    endTrip,
+    getTripsToday
 }

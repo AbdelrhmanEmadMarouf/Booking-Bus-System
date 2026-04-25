@@ -232,10 +232,19 @@ const isUserPassenger = async(userId)=>{
 
     const user = await DB_user.getuserById(userId);
 
+
     return user.role === userRoles.PASSENGER;
 
 }
 
+const isTripDriver = async(tripId,driverId)=>{
+
+    const trip = await DB_trip.getTrip(tripId);
+    const tripDriverId = trip.driver_id;
+
+    return tripDriverId === driverId
+
+}
 
 
 
@@ -255,5 +264,6 @@ module.exports = {
     hasEnoughBalance,
     isUserBookTrip,
     isUserExist,
-    isUserPassenger
+    isUserPassenger,
+    isTripDriver
 }

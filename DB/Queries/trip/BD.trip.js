@@ -60,7 +60,7 @@ const getTrips = async()=>{
         SELECT * 
         FROM trip
     `
-    return trips;
+    return trips.recordset;
 }
 
 const getTrip = async(tripId)=>{
@@ -79,6 +79,18 @@ const deleteTrip = async(tripId)=>{
     
 }
 
+const getTripsToday = async () => {
+    
+    const today = new Date().toISOString().split('T')[0];
+
+    const todayTrips = await sql.query`
+        SELECT * 
+        FROM trip
+        WHERE CAST(scheduled_departure_date AS DATE) = CAST(${today} AS DATE)
+    `;
+
+    return todayTrips.recordset;
+};
 
 
 
@@ -87,5 +99,6 @@ module.exports = {
     createTrip,
     getTrips,
     getTrip,
-    deleteTrip
+    deleteTrip,
+    getTripsToday
 }

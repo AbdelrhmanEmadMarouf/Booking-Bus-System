@@ -53,7 +53,8 @@ const MESSAGES = {
     NOT_ENOUGH_BALANCE : "Not Enough Balance",
     USER_BOOKED_TRIP_ALREADY : "User is Already Booked The Trip",
     USER_NOT_PASSENGER : "User Not Passenger",
-    TRIP_DELETED : "trip deleted successfully"
+    TRIP_DELETED : "trip deleted successfully",
+    NOT_TRIP_DRIVER :"the driver isn't trip driver"
 };
 
 

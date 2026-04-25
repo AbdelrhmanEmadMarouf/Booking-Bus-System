@@ -103,7 +103,7 @@ const invalidUser = (res,err) =>{
 
 
 const successful = (res,data)=>{
-    return res
+        return res
         .status(utils.HTTP_STATUS.OK)
         .json({
                 status : utils.STATUS_TEXT.SUCCESS,
@@ -216,6 +216,15 @@ const endTrip = (res)=>{
                 code :  utils.HTTP_STATUS.ACCEPTED
         })
 }
+const notTripDriver = (res)=>{
+        return res
+        .status(utils.HTTP_STATUS.BAD_REQUEST)
+        .json({
+                status : utils.STATUS_TEXT.FAIL,
+                message : utils.MESSAGES.NOT_TRIP_DRIVER ,
+                code :  utils.HTTP_STATUS.BAD_REQUEST
+        })
+}
 
 
 module.exports = { 
@@ -238,5 +247,6 @@ module.exports = {
         UserBookedTripAlready,
         userNotExist,
         userIsNotPassenger,
-        endTrip
+        endTrip,
+        notTripDriver
 }
