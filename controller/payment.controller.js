@@ -119,25 +119,29 @@ async function createPayment(req, res) {
 
 async function paymentCallback(req, res) {
     try {
-        const data = req.body;
+        const data = req.method === "POST" ? req.body : req.query;
 
         //*if the payment faild return to the paymob that the request is success 
         //*but we know that the payment faild
 
-        console.log('test1');
         
-        if (!data?.obj?.success) {
+        const isSuccess =
+            data.success === 'true' ||
+            data.success === true ||
+            data.obj?.success === true;
+
+        if (!isSuccess) {
             return res.sendStatus(200);
         }
-        console.log('test2');
 
 
-        const orderId = data.obj.order.id;
+
+        const transactionId = data.obj.id;
         const amountCents = data.obj.amount_cents;
         const merchantOrderId = data.obj.order.merchant_order_id;
         const userId = merchantOrderId.split('_')[1];
 
-        if(await validation.isTransactionExist(orderId)){
+        if(await validation.isTransactionExist(transactionId)){
             return res.sendStatus(200);
         }
 
@@ -146,7 +150,7 @@ async function paymentCallback(req, res) {
             new Date(),
             amountCents,
             userId,
-            orderId
+            transactionId
         );
 
         await DB_user.addBalance(userId, amountCents);
