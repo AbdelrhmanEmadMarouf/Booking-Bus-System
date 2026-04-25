@@ -5,6 +5,7 @@ const DB_user = require('../DB/Queries/users/DB.users');
 const DB_bus = require('../DB/Queries/bus/DB.bus');
 const DB_trip = require('../DB/Queries/trip/BD.trip');
 const DB_seat = require('../DB/Queries/seate/DB.seat');
+const DB_payment = require('../DB/Queries/payment/DB.payment');
 const {seatStatus} = require('../utils/seatsStatus')
 const bcrypt = require('bcrypt');
 const fs = require('fs');
@@ -172,6 +173,20 @@ const isSeatFree = async(seatNumber,tripId)=>{
 }
 
 
+const isTransactionExist = async(transactionId)=>{
+
+    const payment = await DB_payment.getPayment(transactionId);
+
+    if(!payment){
+        return false;
+    }
+
+    return true;
+
+}
+
+
+
 
 
 module.exports = {
@@ -184,5 +199,6 @@ module.exports = {
     isDriver,
     isBusFree,
     isTripExist,
-    isSeatFree
+    isSeatFree,
+    isTransactionExist
 }

@@ -1,6 +1,7 @@
 const axios = require('axios');
 const DB_user = require('../DB/Queries/users/DB.users');
-
+const DB_payment = require('../DB/Queries/payment/DB.payment');
+const validation = require('../utils/validations');
 
 const PAYMOB_API_KEY = process.env.PAYMOB_API_KEY;
 const PAYMOB_INTEGRATION_ID = process.env.PAYMOB_INTEGRATION_ID;
@@ -102,11 +103,10 @@ async function createPayment(req, res) {
         const orderId = await createOrder(authToken, amountCents,userId );
         const paymentKey = await createPaymentKey(authToken, orderId, amountCents,user);
 
+
         
         const iframeUrl = `https://accept.paymobsolutions.com/api/acceptance/iframes/${PAYMOB_IFRAME_ID}?payment_token=${paymentKey}`;
 
-        
-        // await DB_user.addBalance(userId,amountCents);
 
         res.status(200).json({ success: true, iframeUrl });
     } catch (error) {
@@ -115,6 +115,51 @@ async function createPayment(req, res) {
     }
 }
 
-module.exports = { createPayment };
+
+
+async function paymentCallback(req, res) {
+    try {
+        const data = req.body;
+
+        //*if the payment faild return to the paymob that the request is success 
+        //*but we know that the payment faild
+
+        console.log('test1');
+        
+        if (!data?.obj?.success) {
+            return res.sendStatus(200);
+        }
+        console.log('test2');
+
+
+        const orderId = data.obj.order.id;
+        const amountCents = data.obj.amount_cents;
+        const merchantOrderId = data.obj.order.merchant_order_id;
+        const userId = merchantOrderId.split('_')[1];
+
+        if(await validation.isTransactionExist(orderId)){
+            return res.sendStatus(200);
+        }
+
+        await DB_payment.addPayment(
+            "card",
+            new Date(),
+            amountCents,
+            userId,
+            orderId
+        );
+
+        await DB_user.addBalance(userId, amountCents);
+        
+
+        res.sendStatus(200);
+
+    } catch (error) {
+        console.error("Callback Error:", error.message);
+        res.sendStatus(500);
+    }
+}
+
+module.exports = { createPayment ,paymentCallback};
 
             
