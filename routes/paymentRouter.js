@@ -14,6 +14,7 @@ router.route('/')
 
 router.route('/callback')
         .post(paymentCallback )
+        .get(paymentCallback);
 
 
 
