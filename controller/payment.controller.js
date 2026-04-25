@@ -86,17 +86,17 @@ async function createPayment(req, res) {
             return res.status(404).json({ error: "User not found" });
         }
 
-        const amountNumber = Number(amount);
+        amount = Number(amount);
 
-        if (!amount || isNaN(amountNumber) || amountNumber <= 0) {
+        if (!amount || isNaN(amount) || amount <= 0) {
             return res.status(400).json({ error: "Invalid amount" });
         }
 
-        if (amountNumber > 50000) {
+        if (amount > 50000) {
             return res.status(400).json({ error: "Amount too large" });
         }
 
-        const amountCents = Math.round(amountNumber * 100);
+        
 
 
         const authToken = await getAuthToken();
@@ -130,7 +130,7 @@ async function paymentCallback(req, res) {
             return res.sendStatus(200);
         }
 
-        const transactionId = obj.id;
+        const transactionId = Number(data.obj?.id || data.id);
         const amountCents = obj.amount_cents;
         const merchantOrderId = obj.order?.merchant_order_id || req.query.merchant_order_id;
 
