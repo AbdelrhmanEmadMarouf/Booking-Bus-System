@@ -13,12 +13,14 @@ const getuserById = async(userId)=>{
 
 }
 
-const getDriverTrips = async(userId)=>{
+const getDriverTrips = async(driverId)=>{
 
         const userData = await sql.query`
+            SELECT *
             FROM trip t
-            WHERE t.driver_id = ${userId};
+            WHERE t.driver_id = ${driverId};
         `;
+
         return userData;
 
 }

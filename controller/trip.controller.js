@@ -1,5 +1,6 @@
 const asyncWrapper = require('../middleware/asyncWrapper');
 const DB_Trip = require('../DB/Queries/trip/BD.trip');
+const DB_Seat = require('../DB/Queries/seate/DB.seat');
 const validation = require('../utils/validations');
 const response = require('../utils/responses');
 
@@ -11,6 +12,7 @@ const createTrip = asyncWrapper(async(req,res,next)=>{
     const scheduled_departure_date = req.body.scheduled_departure_date;
     const bus_id = req.body.bus_id;
     const driver_id = req.body.driver_id;
+    const price = req.body.price;
 
     if(!await validation.isDriver(driver_id)){
         return response.userIsNotDriver(res);
@@ -24,13 +26,16 @@ const createTrip = asyncWrapper(async(req,res,next)=>{
         return response.busIsNotFree(res);
     }
     
-
     if(!await validation.isDriverFree(scheduled_departure_date,scheduled_arrival_date,driver_id)){
         return response.driverIsNotFree(res);
     }
 
 
-    await DB_Trip.createTrip(routeName,scheduled_arrival_date,scheduled_departure_date,bus_id,driver_id);
+    const tripId =   await DB_Trip.createTrip(routeName,scheduled_arrival_date,scheduled_departure_date,bus_id,driver_id,price);
+    
+
+    await DB_Seat.initializeTripSeats(bus_id,tripId);
+    
     response.successful(res,{routeName,scheduled_arrival_date,scheduled_departure_date,bus_id,driver_id});
 
 })

@@ -1,9 +1,6 @@
 const asyncWrapper = require('../middleware/asyncWrapper');
-const generateJWT = require('../utils/generateJWT');
-const {generateRefreshToken} = require('../utils/generateRefreshToken');
-const sendOPT = require('../utils/senOTP');
 const DB_BUS = require('../DB/Queries/bus/DB.bus');
-const validation = require('../utils/validations');
+const DB_Seat = require('../DB/Queries/seate/DB.seat');
 const response = require('../utils/responses');
 
 
@@ -17,6 +14,14 @@ const createBus = asyncWrapper(async(req,res,next)=>{
     response.successful(res, {model ,capacity , plate_no});
 
 })
+
+// const releaseBookedSeats = asyncWrapper(async(req,res,next)=>{
+
+//     const busId  = req.body.busId;;
+//     await DB_Seat.releaseSeats(busId);
+//     response.successful(res, {busId});
+
+// })
 
 
 

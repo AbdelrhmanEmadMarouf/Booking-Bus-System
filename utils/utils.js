@@ -51,7 +51,8 @@ const MESSAGES = {
     TRIP_NOT_EXIST : "Trip Not Exist",
     SEAT_NOT_FREE  : "Seat Not Free",
     NOT_ENOUGH_BALANCE : "Not Enough Balance",
-    USER_BOOKED_TRIP_ALREADY : "User is Already Booked The Trip"
+    USER_BOOKED_TRIP_ALREADY : "User is Already Booked The Trip",
+    USER_NOT_PASSENGER : "User Not Passenger"
 };
 
 

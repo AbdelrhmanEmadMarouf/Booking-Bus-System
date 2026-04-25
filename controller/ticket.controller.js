@@ -2,6 +2,8 @@ const asyncWrapper = require('../middleware/asyncWrapper');
 const DB_Ticket = require('../DB/Queries/ticket/DB.ticket');
 const DB_User = require('../DB/Queries/users/DB.users');
 const DB_trip = require('../DB/Queries/trip/BD.trip');
+const DB_bus = require('../DB/Queries/bus/DB.bus');
+const DB_seat = require('../DB/Queries/seate/DB.seat');
 const validation = require('../utils/validations');
 const response = require('../utils/responses');
 
@@ -12,6 +14,14 @@ const createTicket = asyncWrapper(async(req,res,next)=>{
     const trip_id = req.body.trip_id;
     const user_id = req.body.user_id;
     const seat_no = req.body.seat_no;
+
+    if(!await validation.isUserExist(user_id)){
+        return response.userNotExist(res);
+    }
+
+    if(!await validation.isUserPassenger(user_id)){
+        return response.userIsNotPassenger(res);
+    }
 
     if(!await validation.isTripExist(trip_id)){
         return response.tripNotExist(res);
@@ -25,18 +35,19 @@ const createTicket = asyncWrapper(async(req,res,next)=>{
         return response.UserBookedTripAlready(res);
     }
 
-
     const trip = await DB_trip.getTrip(trip_id);
     const tripPrice = trip.price;
     
-
-
     if(!await validation.hasEnoughBalance(user_id,tripPrice)){
         return response.notEnoughBalance(res);
     }
 
 
     await DB_Ticket.createTicket(booking_date,trip_id,user_id,seat_no);
+
+    const busId = await DB_bus.getBusId(trip_id);
+    await DB_seat.bookSeat(busId,trip_id,seat_no);
+
     await DB_User.withdrawFromWallet(user_id,tripPrice);
 
     response.successful(res,{booking_date,trip_id,user_id,seat_no});

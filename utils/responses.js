@@ -189,6 +189,24 @@ const UserBookedTripAlready = (res)=>{
                 code :  utils.HTTP_STATUS.BAD_REQUEST
         })
 }
+const userNotExist = (res)=>{
+        return res
+        .status(utils.HTTP_STATUS.NOT_FOUND)
+        .json({
+                status : utils.STATUS_TEXT.FAIL,
+                message : utils.MESSAGES.USER_NOT_FOUND ,
+                code :  utils.HTTP_STATUS.NOT_FOUND
+        })
+}
+const userIsNotPassenger = (res)=>{
+        return res
+        .status(utils.HTTP_STATUS.BAD_REQUEST)
+        .json({
+                status : utils.STATUS_TEXT.FAIL,
+                message : utils.MESSAGES.USER_NOT_PASSENGER ,
+                code :  utils.HTTP_STATUS.BAD_REQUEST
+        })
+}
 
 
 module.exports = { 
@@ -208,5 +226,7 @@ module.exports = {
         tripNotExist,
         seatNotFree,
         notEnoughBalance,
-        UserBookedTripAlready
+        UserBookedTripAlready,
+        userNotExist,
+        userIsNotPassenger
 }

@@ -7,6 +7,7 @@ const DB_trip = require('../DB/Queries/trip/BD.trip');
 const DB_seat = require('../DB/Queries/seate/DB.seat');
 const DB_Ticket = require('../DB/Queries/ticket/DB.ticket');
 const DB_payment = require('../DB/Queries/payment/DB.payment');
+const {userRoles} = require('./userRoles');
 const {seatStatus} = require('../utils/seatsStatus')
 const bcrypt = require('bcrypt');
 const fs = require('fs');
@@ -103,10 +104,13 @@ const isDriver = async(user_id)=>{
 
 const isDriverFree = async (startTime, endTime, driver_id) => {
 
+    
     const driverData = await DB_user.getDriverTrips(driver_id);
 
     const newStart = new Date(startTime);
+
     const newEnd = new Date(endTime);
+
 
     for (const it of driverData.recordset) {
 
@@ -158,8 +162,13 @@ const isTripExist = async(tripId)=>{
 
 const isSeatFree = async(seatNumber,tripId)=>{
 
+
     const busId = await DB_bus.getBusId(tripId);
-    const seat = await DB_seat.getSeat(busId,seatNumber);
+
+
+    const seat = await DB_seat.getSeat(busId,tripId,seatNumber);
+
+
 
     if(!seat){
         return false;
@@ -209,6 +218,23 @@ const isUserBookTrip = async(userId,tripId)=>{
     return true
 
 }
+const isUserExist = async(userId)=>{
+
+    const user = await DB_user.getuserById(userId);
+
+    if(!user){
+        return false
+    }
+    return true
+
+}
+const isUserPassenger = async(userId)=>{
+
+    const user = await DB_user.getuserById(userId);
+
+    return user.role === userRoles.PASSENGER;
+
+}
 
 
 
@@ -227,5 +253,7 @@ module.exports = {
     isSeatFree,
     isTransactionExist,
     hasEnoughBalance,
-    isUserBookTrip
+    isUserBookTrip,
+    isUserExist,
+    isUserPassenger
 }
