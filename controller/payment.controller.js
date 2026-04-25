@@ -79,7 +79,7 @@ async function createPayment(req, res) {
     
     try {
         const { amount } = req.body;
-        const userId = req.user.id; //* added
+        const userId = req.user.id; 
         const user = await DB_user.getuserById(userId);
 
         if (!user) {

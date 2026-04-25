@@ -12,7 +12,7 @@ const createTicket = asyncWrapper(async(req,res,next)=>{
 
     const booking_date = req.body.booking_date;
     const trip_id = req.body.trip_id;
-    const user_id = req.body.user_id;
+    const user_id = req.user.id;
     const seat_no = req.body.seat_no;
 
     if(!await validation.isUserExist(user_id)){
