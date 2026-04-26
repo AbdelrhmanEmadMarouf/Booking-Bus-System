@@ -49,6 +49,7 @@ const createTicket = asyncWrapper(async(req,res,next)=>{
 
     const busId = await DB_bus.getBusId(trip_id);
     await DB_seat.bookSeat(busId,trip_id,seat_no);
+    await DB_User.incrementUserTrips(user_id);
     await DB_User.withdrawFromWallet(user_id,tripPrice);
     await DB_active.addActiveLogs(await getBookingTripTitle(user_id),await getBookingTripSubTitle(trip_id));
 

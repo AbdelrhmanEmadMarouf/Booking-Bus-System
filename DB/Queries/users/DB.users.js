@@ -109,6 +109,27 @@ const getUserByPhone = async(phone)=>{
 
 }
 
+const incrementUserTrips = async(userId)=>{
+
+    let totalTrips = await sql.query`
+        SELECT total_trips  
+        FROM USERS
+        WHERE user_id = ${userId}
+    `;
+
+    
+    totalTrips = totalTrips.recordset[0].total_trips +1;
+    
+    
+    await sql.query`
+        UPDATE USERS 
+        SET total_trips = ${totalTrips}
+        WHERE user_id = ${userId}
+    `;
+
+
+}
+
 
 
 module.exports = {
@@ -119,5 +140,6 @@ module.exports = {
     withdrawFromWallet,
     getUserByEmail,
     getUserByPhone,
-    getUserBylicenseNumber
+    getUserBylicenseNumber,
+    incrementUserTrips
 }

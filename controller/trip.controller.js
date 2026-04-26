@@ -3,6 +3,7 @@ const DB_Trip = require('../DB/Queries/trip/BD.trip');
 const DB_Ticket = require('../DB/Queries/ticket/DB.ticket');
 const DB_Seat = require('../DB/Queries/seate/DB.seat');
 const DB_bus = require('../DB/Queries/bus/DB.bus');
+const DB_User = require('../DB/Queries/users/DB.users');
 const validation = require('../utils/validations');
 const response = require('../utils/responses');
 
@@ -34,6 +35,8 @@ const createTrip = asyncWrapper(async(req,res,next)=>{
 
 
     const tripId =   await DB_Trip.createTrip(routeName,scheduled_arrival_date,scheduled_departure_date,bus_id,driver_id,price);
+
+    await DB_User.incrementUserTrips(driver_id); //* increment driver trips
     
 
     await DB_Seat.initializeTripSeats(bus_id,tripId);
