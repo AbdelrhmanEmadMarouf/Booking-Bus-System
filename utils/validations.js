@@ -22,7 +22,6 @@ const isEmailExist = (email)=>{
         if(!email){
         throw errors.EMAIL_NOT_FOUND_ERROR
         }
-
 }
 
 const isPasswoedExist = (password)=>{
@@ -228,6 +227,27 @@ const isUserExist = async(userId)=>{
     return true
 
 }
+const isEmailAlreadyExist = async(email)=>{
+
+    const user = await DB_user.getUserByEmail(email);
+
+    if(!user){
+        return false
+    }
+    return true
+
+}
+const isPhoneAlreadyExist = async(phone)=>{
+
+    const user = await DB_user.getUserByPhone(phone);
+
+    if(!user){
+        return false
+    }
+    return true
+
+}
+
 const isUserPassenger = async(userId)=>{
 
     const user = await DB_user.getuserById(userId);
@@ -265,5 +285,7 @@ module.exports = {
     isUserBookTrip,
     isUserExist,
     isUserPassenger,
-    isTripDriver
+    isTripDriver,
+    isEmailAlreadyExist,
+    isPhoneAlreadyExist
 }

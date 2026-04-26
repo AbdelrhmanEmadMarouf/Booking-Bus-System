@@ -225,6 +225,24 @@ const notTripDriver = (res)=>{
                 code :  utils.HTTP_STATUS.BAD_REQUEST
         })
 }
+const emailAlreadyExist = (res)=>{
+        return res
+        .status(utils.HTTP_STATUS.BAD_REQUEST)
+        .json({
+                status : utils.STATUS_TEXT.FAIL,
+                message : utils.MESSAGES.EMAIL_IS_ALREADY_EXIST ,
+                code :  utils.HTTP_STATUS.BAD_REQUEST
+        })
+}
+const phoneAlreadyExist = (res)=>{
+        return res
+        .status(utils.HTTP_STATUS.BAD_REQUEST)
+        .json({
+                status : utils.STATUS_TEXT.FAIL,
+                message : utils.MESSAGES.PHONE_IS_ALREADY_EXIST ,
+                code :  utils.HTTP_STATUS.BAD_REQUEST
+        })
+}
 
 
 module.exports = { 
@@ -248,5 +266,7 @@ module.exports = {
         userNotExist,
         userIsNotPassenger,
         endTrip,
-        notTripDriver
+        notTripDriver,
+        emailAlreadyExist,
+        phoneAlreadyExist
 }

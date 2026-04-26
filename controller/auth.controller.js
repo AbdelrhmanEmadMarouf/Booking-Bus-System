@@ -1,16 +1,29 @@
 const asyncWrapper = require('../middleware/asyncWrapper');
 const generateJWT = require('../utils/generateJWT');
-const {generateRefreshToken} = require('../utils/generateRefreshToken');
 const sendOPT = require('../utils/senOTP');
 const DB_auth = require('../DB/Queries/auth/DB.auth');
 const validation = require('../utils/validations');
 const response = require('../utils/responses');
-
+const {userRoles} = require('../utils/userRoles');
 
 const registration = asyncWrapper(async(req,res,next)=>{
 
+    req.body.role = userRoles.PASSENGER;
     const newUser = req.body;
+
     validation.validateEmailFormat(newUser.email);
+
+    if(await validation.isEmailAlreadyExist(newUser.email)){
+    return response.emailAlreadyExist(res);
+    }
+
+    if(await validation.isPhoneAlreadyExist(newUser.phone)){
+    return  response.phoneAlreadyExist(res);
+    }
+
+
+
+
     const otp = await sendOPT(newUser);
     await  DB_auth.insertOtp(otp);
     const otpdata = await DB_auth.getOtpData(otp);

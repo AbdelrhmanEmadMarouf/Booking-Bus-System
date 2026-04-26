@@ -75,6 +75,29 @@ const withdrawFromWallet = async(userId,amount)=>{
 
 }
 
+const getUserByEmail = async(email)=>{
+
+    const user = await sql.query`
+        SELECT * 
+        FROM USERS
+        WHERE email = ${email}
+    `;
+
+    return user.recordset[0];
+
+}
+const getUserByPhone = async(phone)=>{
+
+    const user = await sql.query`
+        SELECT * 
+        FROM USERS
+        WHERE phone = ${phone}
+    `;
+
+    return user.recordset[0];
+
+}
+
 
 
 module.exports = {
@@ -82,5 +105,7 @@ module.exports = {
     getDriverTrips,
     isUserDriver,
     addBalance,
-    withdrawFromWallet
+    withdrawFromWallet,
+    getUserByEmail,
+    getUserByPhone
 }

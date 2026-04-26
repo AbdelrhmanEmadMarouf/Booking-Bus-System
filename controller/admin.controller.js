@@ -1,32 +1,14 @@
 const asyncWrapper = require('../middleware/asyncWrapper');
-const DB_manger = require('../DB/Queries/manger/DB.manger');
 const DB_auth = require('../DB/Queries/auth/DB.auth');
 const response = require('../utils/responses');
 const generateJWT = require('../utils/generateJWT');
 const {userRoles} = require('../utils/userRoles');
 const validation = require('../utils/validations');
 
-const getPassengers = asyncWrapper(async(req,res,next)=>{
 
-    const todayPassengers =  await DB_manger.getPassengersToday();
-    
-    response.successful(res,{todayPassengers});
-    
+const addManger = asyncWrapper(async(req,res,next)=>{
 
-})
-
-const getDashboardSummary = asyncWrapper(async(req,res,next)=>{
-
-    const dashboardSummary =  await DB_manger.getDashboardSummary();
-    response.successful(res,{dashboardSummary});
-    
-
-})
-
-
-const addDriver = asyncWrapper(async(req,res,next)=>{
-
-        req.body.role = userRoles.DRIVER;
+        req.body.role = userRoles.MANGER;
 
         const newUser = req.body;
         validation.validateEmailFormat(newUser.email);
@@ -39,12 +21,12 @@ const addDriver = asyncWrapper(async(req,res,next)=>{
         return  response.phoneAlreadyExist(res);
         }
 
+
         await DB_auth.insertUser(req);
         const tokensData = await DB_auth.insertRefreshToken(req);
         const accessToken =  generateJWT(tokensData.payload);
         return response.validateOtp(tokensData.payload,req.avatarPath,accessToken,tokensData.refreshToken,res)
     
-
 })
 
 
@@ -52,7 +34,5 @@ const addDriver = asyncWrapper(async(req,res,next)=>{
 
 
 module.exports = {
-    getDashboardSummary,
-    getPassengers,
-    addDriver
+    addManger
 }

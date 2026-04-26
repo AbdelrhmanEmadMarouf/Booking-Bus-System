@@ -16,6 +16,7 @@ const ticketRouter = require('./routes/ticketRouter');
 const paymentRouter = require('./routes/paymentRouter');
 const usersRouter = require('./routes/usersRouter');
 const mangerRouter = require('./routes/mangerRouter');
+const adminRouter = require('./routes/adminRouter');
 
 var corsOptions = {
     origin:  'http://127.0.0.1:5500',
@@ -37,6 +38,7 @@ app.use(express.json()); //* tp parse request body into json
 app.use('/api/auth',cors(corsOptions), authRouter);
 app.use('/api/users',cors(corsOptions), usersRouter);
 app.use('/api/manger',cors(corsOptions), mangerRouter);
+app.use('/api/admin',cors(corsOptions), adminRouter);
 app.use('/api/trip',cors(corsOptions), tripRouter);
 app.use('/api/ticket',cors(corsOptions), ticketRouter);
 app.use('/api/route',cors(corsOptions), routeRouter);
