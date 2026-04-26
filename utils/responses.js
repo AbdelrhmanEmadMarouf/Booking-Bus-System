@@ -243,6 +243,15 @@ const phoneAlreadyExist = (res)=>{
                 code :  utils.HTTP_STATUS.BAD_REQUEST
         })
 }
+const LlicenseNumberAlreadyExist = (res)=>{
+        return res
+        .status(utils.HTTP_STATUS.BAD_REQUEST)
+        .json({
+                status : utils.STATUS_TEXT.FAIL,
+                message : utils.MESSAGES.Llicense_Number_IS_ALREADY_EXIST ,
+                code :  utils.HTTP_STATUS.BAD_REQUEST
+        })
+}
 
 
 module.exports = { 
@@ -268,5 +277,6 @@ module.exports = {
         endTrip,
         notTripDriver,
         emailAlreadyExist,
-        phoneAlreadyExist
+        phoneAlreadyExist,
+        LlicenseNumberAlreadyExist
 }

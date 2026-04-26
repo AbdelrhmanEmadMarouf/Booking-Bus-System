@@ -4,8 +4,10 @@ const DB_User = require('../DB/Queries/users/DB.users');
 const DB_trip = require('../DB/Queries/trip/BD.trip');
 const DB_bus = require('../DB/Queries/bus/DB.bus');
 const DB_seat = require('../DB/Queries/seate/DB.seat');
+const DB_active = require('../DB/Queries/activities/DB.active');
 const validation = require('../utils/validations');
 const response = require('../utils/responses');
+const {getBookingTripTitle,getBookingTripSubTitle} = require('../utils/activities');
 
 
 const createTicket = asyncWrapper(async(req,res,next)=>{
@@ -47,8 +49,8 @@ const createTicket = asyncWrapper(async(req,res,next)=>{
 
     const busId = await DB_bus.getBusId(trip_id);
     await DB_seat.bookSeat(busId,trip_id,seat_no);
-
     await DB_User.withdrawFromWallet(user_id,tripPrice);
+    await DB_active.addActiveLogs(await getBookingTripTitle(user_id),await getBookingTripSubTitle(trip_id));
 
     response.successful(res,{booking_date : today,trip_id,user_id,seat_no});
 

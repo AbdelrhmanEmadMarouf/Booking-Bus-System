@@ -5,6 +5,8 @@ const response = require('../utils/responses');
 const generateJWT = require('../utils/generateJWT');
 const {userRoles} = require('../utils/userRoles');
 const validation = require('../utils/validations');
+const DB_active = require('../DB/Queries/activities/DB.active');
+const {activity,getDriverSubTitleLog} = require('../utils/activities');
 
 const getPassengers = asyncWrapper(async(req,res,next)=>{
 
@@ -22,17 +24,30 @@ const getDashboardSummary = asyncWrapper(async(req,res,next)=>{
     
 
 })
+const getActivities = asyncWrapper(async(req,res,next)=>{
+
+    const activities =  await DB_manger.getActivities();
+    response.successful(res,{activities});
+    
+
+})
 
 
 const addDriver = asyncWrapper(async(req,res,next)=>{
 
         req.body.role = userRoles.DRIVER;
+        const driverName = `${req.body.first_name} ${req.body.last_name}`;
+        const driverLlicenseNumber = req.body.license_number;
 
         const newUser = req.body;
         validation.validateEmailFormat(newUser.email);
 
         if(await validation.isEmailAlreadyExist(newUser.email)){
         return response.emailAlreadyExist(res);
+        }
+
+        if(await validation.isLlicenseNumberAlreadyExist(driverLlicenseNumber)){
+        return response.LlicenseNumberAlreadyExist(res);
         }
 
         if(await validation.isPhoneAlreadyExist(newUser.phone)){
@@ -42,6 +57,9 @@ const addDriver = asyncWrapper(async(req,res,next)=>{
         await DB_auth.insertUser(req);
         const tokensData = await DB_auth.insertRefreshToken(req);
         const accessToken =  generateJWT(tokensData.payload);
+
+        await DB_active.addActiveLogs(activity.DRIVER_REGISTERED,await getDriverSubTitleLog(driverName,driverLlicenseNumber));
+
         return response.validateOtp(tokensData.payload,req.avatarPath,accessToken,tokensData.refreshToken,res)
     
 
@@ -54,5 +72,6 @@ const addDriver = asyncWrapper(async(req,res,next)=>{
 module.exports = {
     getDashboardSummary,
     getPassengers,
-    addDriver
+    addDriver,
+    getActivities
 }

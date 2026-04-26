@@ -13,6 +13,17 @@ const getuserById = async(userId)=>{
         return userData.recordset[0];
 
 }
+const getUserBylicenseNumber = async(licenseNumber)=>{
+
+        const userData = await sql.query`
+            SELECT * FROM USERS 
+            WHERE license_number = ${licenseNumber}
+        `;
+
+
+        return userData.recordset[0];
+
+}
 
 const getDriverTrips = async(driverId)=>{
 
@@ -107,5 +118,6 @@ module.exports = {
     addBalance,
     withdrawFromWallet,
     getUserByEmail,
-    getUserByPhone
+    getUserByPhone,
+    getUserBylicenseNumber
 }

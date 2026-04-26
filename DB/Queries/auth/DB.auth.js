@@ -42,7 +42,7 @@ req.avatarPath = avatarPath;
 
 try{
 await sql.query`
-    INSERT INTO USERS(email, first_name, last_name, password,role,Avatar,phone)
+    INSERT INTO USERS(email, first_name, last_name, password,role,Avatar,phone,license_number)
     VALUES (
         ${req.body.email},
         ${req.body.first_name},
@@ -50,7 +50,8 @@ await sql.query`
         ${hashedPassword},
         ${req.body.role},
         ${avatarPath},
-        ${req.body.phone}
+        ${req.body.phone},
+        ${req.body.license_number}
     )
 `;
 }catch(err){

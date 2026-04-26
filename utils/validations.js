@@ -247,6 +247,16 @@ const isPhoneAlreadyExist = async(phone)=>{
     return true
 
 }
+const isLlicenseNumberAlreadyExist = async(licenseNumber)=>{
+
+    const user = await DB_user.getUserBylicenseNumber(licenseNumber);
+
+    if(!user){
+        return false
+    }
+    return true
+
+}
 
 const isUserPassenger = async(userId)=>{
 
@@ -287,5 +297,6 @@ module.exports = {
     isUserPassenger,
     isTripDriver,
     isEmailAlreadyExist,
-    isPhoneAlreadyExist
+    isPhoneAlreadyExist,
+    isLlicenseNumberAlreadyExist
 }

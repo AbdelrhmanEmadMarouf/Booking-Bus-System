@@ -46,10 +46,22 @@ const getDashboardSummary = async()=>{
         return dashboardSummary;
 
 }
+const getActivities = async()=>{
+
+    const activities = await sql.query`
+        SELECT *
+        FROM activity_log
+        ORDER BY event_time DESC;
+    `;
+
+        return activities.recordset;
+
+}
 
 
 
 module.exports = {
     getDashboardSummary,
-    getPassengersToday
+    getPassengersToday,
+    getActivities
 }
