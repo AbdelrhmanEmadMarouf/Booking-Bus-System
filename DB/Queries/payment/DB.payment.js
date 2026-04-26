@@ -34,11 +34,25 @@ const getTotalRevenue = async()=>{
 
     return totalRevenue.recordset[0].total_revenue;
 }
+const getTotalRevenueToday = async()=>{
+
+    const today = new Date().toISOString().split('T')[0];
+
+    const totalRevenueToday = await sql.query`
+            SELECT ISNULL(SUM(T.price), 0) AS total_revenue_today
+            FROM trip T 
+            JOIN ticket TK ON T.trip_id = TK.trip_id
+            WHERE CAST(TK.booking_date AS DATE) = ${today}
+    `;
+
+    return totalRevenueToday.recordset[0].total_revenue_today;
+}
 
 
 
 module.exports = {
     getPayment,
     addPayment,
-    getTotalRevenue
+    getTotalRevenue,
+    getTotalRevenueToday
 }

@@ -170,15 +170,7 @@ async function paymentCallback(req, res) {
 }
 
 
-const getTotalRevenue = asyncWrapper(async(req,res,next)=>{
 
-    const totalRevenue = await DB_payment.getTotalRevenue();
-    response.successful(res,{totalRevenue});
-    
-
-})
-
-
-module.exports = { createPayment ,paymentCallback,getTotalRevenue};
+module.exports = { createPayment ,paymentCallback};
 
             

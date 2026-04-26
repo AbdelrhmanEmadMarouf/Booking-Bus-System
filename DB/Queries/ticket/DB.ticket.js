@@ -2,15 +2,17 @@ const {sql} = require('../../config');
 
 
 const createTicket = async (
-booking_date,
 trip_id,
 user_id,
 seat_no
 ) => {
 
+
+    const today = new Date().toISOString().split('T')[0];;
+
     await sql.query`
             INSERT INTO ticket (booking_date,trip_id,seat_no,user_id)
-            VALUES(${booking_date},${trip_id},${seat_no},${user_id})
+            VALUES(${today},${trip_id},${seat_no},${user_id})
     `;
 };
 

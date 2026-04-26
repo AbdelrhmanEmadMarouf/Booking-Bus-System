@@ -75,32 +75,12 @@ const withdrawFromWallet = async(userId,amount)=>{
 
 }
 
-const getPassengersToday = async()=>{
 
-    const today = new Date().toISOString().split('T')[0];
-
-    const todayPassengers = await sql.query`
-            SELECT U.*
-            FROM TRIP T 
-            JOIN ticket TK ON T.trip_id = TK.trip_id
-            JOIN USERS U ON Tk.user_id = U.user_id
-            WHERE CAST(scheduled_departure_date AS DATE) = ${today}
-    `;
-
-    const passengers = todayPassengers.recordset.map(user => {
-        const { refresh_token, ...safeUser } = user;
-        return safeUser;
-    });
-
-    return passengers;
-
-}
 
 module.exports = {
     getuserById,
     getDriverTrips,
     isUserDriver,
     addBalance,
-    withdrawFromWallet,
-    getPassengersToday
+    withdrawFromWallet
 }

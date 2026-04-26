@@ -10,7 +10,7 @@ const response = require('../utils/responses');
 
 const createTicket = asyncWrapper(async(req,res,next)=>{
 
-    const booking_date = req.body.booking_date;
+    const today = new Date().toISOString().split('T')[0];
     const trip_id = req.body.trip_id;
     const user_id = req.user.id;
     const seat_no = req.body.seat_no;
@@ -43,14 +43,14 @@ const createTicket = asyncWrapper(async(req,res,next)=>{
     }
 
 
-    await DB_Ticket.createTicket(booking_date,trip_id,user_id,seat_no);
+    await DB_Ticket.createTicket(trip_id,user_id,seat_no);
 
     const busId = await DB_bus.getBusId(trip_id);
     await DB_seat.bookSeat(busId,trip_id,seat_no);
 
     await DB_User.withdrawFromWallet(user_id,tripPrice);
 
-    response.successful(res,{booking_date,trip_id,user_id,seat_no});
+    response.successful(res,{booking_date : today,trip_id,user_id,seat_no});
 
 })
 
