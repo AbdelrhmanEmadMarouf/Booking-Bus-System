@@ -69,9 +69,22 @@ const addDriver = asyncWrapper(async(req,res,next)=>{
 const getDrivers = asyncWrapper(async(req,res,next)=>{
 
         const drivers = await DB_user.getDrivers();
-
         return response.successful(res,{drivers});
 
+})
+
+
+const rewardDriver = asyncWrapper(async(req,res,next)=>{
+    
+        const driverId = req.params.driverId
+        const reward = req.body.reward;
+
+        if(!await validation.isDriver(driverId)){
+            return response.userIsNotDriver(res);
+        }
+
+        await DB_user.addBalance(driverId,reward);
+        response.successful(res,{reward});
 
 })
 
@@ -84,5 +97,6 @@ module.exports = {
     getPassengers,
     addDriver,
     getActivities,
-    getDrivers
+    getDrivers,
+    rewardDriver
 }
