@@ -61,6 +61,18 @@ const getTrip = asyncWrapper(async(req,res,next)=>{
 
 })
 
+
+const getSeats = asyncWrapper(async(req,res,next)=>{
+
+    console.log('test');
+
+    const tripId =  req.params.tripId;
+
+    const seats = await DB_Seat.getTripSeats(tripId);
+    response.successful(res,{seats});
+
+})
+
 const endTrip = asyncWrapper(async(req,res,next)=>{
 
     const tripId =  req.params.tripId;
@@ -91,5 +103,6 @@ module.exports = {
     getTrips,
     getTrip,
     endTrip,
-    getTripsToday
+    getTripsToday,
+    getSeats
 }

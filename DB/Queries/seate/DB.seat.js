@@ -15,6 +15,17 @@ const getSeat = async(bus_id,tripId,seat_number)=>{
         return seat.recordset[0];
 }
 
+const getTripSeats = async(tripId)=>{
+
+        const seats = await sql.query`
+                SELECT seat_no,status 
+                FROM SEAT
+                WHERE trip_id = ${tripId}
+                `;
+
+        return seats.recordset;
+}
+
 const bookSeat = async(bus_id,tripId,seat_number)=>{
 
         await sql.query`
@@ -68,5 +79,6 @@ module.exports = {
         getSeat,
         bookSeat,
         initializeTripSeats,
-        releaseSeats
+        releaseSeats,
+        getTripSeats
 }
