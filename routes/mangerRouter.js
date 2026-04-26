@@ -3,7 +3,7 @@ const router = express.Router();
 const {verifyToken} = require('../middleware/verifyToken.js');
 const {userRoles} = require('../utils/userRoles.js');
 const {allowedTo} = require('../middleware/allowedTo.js');
-const {getDashboardSummary,getPassengers,addDriver,getActivities} = require('../controller/manger.controller');
+const {getDashboardSummary,getPassengers,addDriver,getActivities,getDrivers} = require('../controller/manger.controller');
 
 
 router.route('/dashboard')
@@ -16,7 +16,9 @@ router.route('/passenger/today')
         .get(verifyToken,allowedTo(userRoles.ADMIN,userRoles.MANGER),getPassengers);
 
 router.route('/driver')
-        .post(verifyToken,allowedTo(userRoles.ADMIN,userRoles.MANGER),addDriver);
+        .post(verifyToken,allowedTo(userRoles.ADMIN,userRoles.MANGER),addDriver)
+        .get(verifyToken,allowedTo(userRoles.ADMIN,userRoles.MANGER),getDrivers);
+
 
 
 module.exports = router ;

@@ -1,6 +1,7 @@
 const asyncWrapper = require('../middleware/asyncWrapper');
 const DB_manger = require('../DB/Queries/manger/DB.manger');
 const DB_auth = require('../DB/Queries/auth/DB.auth');
+const DB_user = require('../DB/Queries/users/DB.users');
 const response = require('../utils/responses');
 const generateJWT = require('../utils/generateJWT');
 const {userRoles} = require('../utils/userRoles');
@@ -65,6 +66,15 @@ const addDriver = asyncWrapper(async(req,res,next)=>{
 
 })
 
+const getDrivers = asyncWrapper(async(req,res,next)=>{
+
+        const drivers = await DB_user.getDrivers();
+
+        return response.successful(res,{drivers});
+
+
+})
+
 
 
 
@@ -73,5 +83,6 @@ module.exports = {
     getDashboardSummary,
     getPassengers,
     addDriver,
-    getActivities
+    getActivities,
+    getDrivers
 }

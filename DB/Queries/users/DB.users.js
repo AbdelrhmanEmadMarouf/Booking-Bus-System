@@ -129,6 +129,18 @@ const incrementUserTrips = async(userId)=>{
 
 
 }
+const getDrivers = async()=>{
+
+    let drivers = await sql.query`
+        SELECT user_id , first_name , last_name , phone ,email , role , avatar ,wallet_balance
+        FROM USERS 
+        WHERE role = 'DRIVER'
+    `;
+
+    
+    return drivers.recordset;
+    
+}
 
 
 
@@ -141,5 +153,6 @@ module.exports = {
     getUserByEmail,
     getUserByPhone,
     getUserBylicenseNumber,
-    incrementUserTrips
+    incrementUserTrips,
+    getDrivers
 }
