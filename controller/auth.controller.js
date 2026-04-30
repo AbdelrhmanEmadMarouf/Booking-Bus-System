@@ -65,7 +65,7 @@ if(validationResult.loginStatus){
             first_name: user.first_name,
             last_name: user.last_name,
             role: user.role,
-            user_id: user.user_id,
+            id: user.user_id,
             phone: user.phone
         };
 

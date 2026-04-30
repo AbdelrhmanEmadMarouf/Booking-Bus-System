@@ -80,9 +80,28 @@ ORDER BY t.scheduled_departure_date;
 
 const getTrip = async(tripId)=>{
     const trip =   await sql.query`
-        SELECT * 
-        FROM trip
+        SELECT
+            t.trip_id,
+            t.scheduled_departure_date,
+            t.scheduled_arrival_date,
+            t.price,
+            t.driver_id,
+            c1.city_name AS from_city,
+            c2.city_name AS to_city,
+            s1.name as start_station,
+            s2.name as end_station,
+            b.plate_no as bus_palte_no,
+            u.first_name + ' ' +u.last_name as driver_name
+        FROM trip t
+        JOIN route r ON t.route_id = r.route_id
+        JOIN station s1 ON r.origin_station_id = s1.station_id
+        JOIN city c1 ON s1.city_id = c1.city_id
+        JOIN station s2 ON r.destination_station_id = s2.station_id
+        JOIN city c2 ON s2.city_id = c2.city_id
+        JOIN users u ON u.user_id = t.driver_id
+        JOIN bus b ON b.bus_id = t.bus_id
         WHERE trip_id = ${tripId}
+        ORDER BY t.scheduled_departure_date
     `
     return trip.recordset[0];
 }
@@ -106,6 +125,21 @@ const getTripsToday = async () => {
 
     return todayTrips.recordset;
 };
+const getTripPassengers = async (tripId) => {
+    
+    const tripPassengers = await sql.query`
+            SELECT 
+            u.first_name + ' ' + u.last_name as name  ,
+            u.phone,
+            tk.seat_no
+            FROM trip t 
+            JOIN ticket tk on tk.trip_id = t.trip_id
+            JOIN users u on u.user_id = tk.user_id
+            WHERE t.trip_id= ${tripId}
+    `;
+
+    return tripPassengers.recordset;
+};
 
 
 
@@ -115,5 +149,6 @@ module.exports = {
     getTrips,
     getTrip,
     deleteTrip,
-    getTripsToday
+    getTripsToday,
+    getTripPassengers
 }

@@ -6,6 +6,7 @@ const utils = require('../utils/utils');
 module.exports = async(req,res,next)=>{
 
     const authHeader = req.headers['Authorization'] || req.headers['authorization'];
+
     
     if(!authHeader){
         return  res.status(utils.HTTP_STATUS.UNAUTHORIZED)

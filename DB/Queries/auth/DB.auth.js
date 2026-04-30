@@ -108,7 +108,7 @@ const updateRefteshToken = async(user,refreshToken)=>{
     await sql.query`
         UPDATE USERS
         SET refresh_token = ${refreshToken}
-        WHERE user_id = ${user.user_id}
+        WHERE user_id = ${user.id}
         `
 }
 
