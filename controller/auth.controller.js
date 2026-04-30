@@ -2,9 +2,11 @@ const asyncWrapper = require('../middleware/asyncWrapper');
 const generateJWT = require('../utils/generateJWT');
 const sendOPT = require('../utils/senOTP');
 const DB_auth = require('../DB/Queries/auth/DB.auth');
+const DB_USER = require('../DB/Queries/users/DB.users');
 const validation = require('../utils/validations');
 const response = require('../utils/responses');
 const {userRoles} = require('../utils/userRoles');
+const {generateRefreshToken} = require('../utils/generateRefreshToken');
 
 const registration = asyncWrapper(async(req,res,next)=>{
 
@@ -56,7 +58,19 @@ const validationResult = await validation.loginValidation(req.body.email,req.bod
 if(validationResult.loginStatus){
 
         const accessToken =  generateJWT(validationResult.data);
-        const refreshToken = await DB_auth.getRefreshToken(validationResult.data.email);
+        let user = await DB_USER.getUserByEmail(req.body.email);
+
+        let payload = {
+            email: user.email,
+            first_name: user.first_name,
+            last_name: user.last_name,
+            role: user.role,
+            user_id: user.user_id,
+            phone: user.phone
+        };
+
+        const refreshToken = generateRefreshToken(payload);
+
         await DB_auth.updateRefteshToken(validationResult.data,refreshToken);
         return response.loginSuccessful(accessToken,refreshToken,res)
 

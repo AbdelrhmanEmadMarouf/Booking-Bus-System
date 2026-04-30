@@ -36,6 +36,7 @@ const MESSAGES = {
     REQUIRED_EMAIL: "Email is required",
     REQUIRED_PASSWORD: "Password is required",
     USER_NOT_FOUND: "User not found",
+    DRIVER_NOT_FOUND: "Driver not found",
     WRONG_PASSWORD: "Incorrect password",
     REQUIRED_TOKEN: "Authentication token is required",
     INVALID_TOKEN: "Invalid authentication token",

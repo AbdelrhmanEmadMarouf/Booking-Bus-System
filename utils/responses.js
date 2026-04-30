@@ -198,6 +198,15 @@ const userNotExist = (res)=>{
                 code :  utils.HTTP_STATUS.NOT_FOUND
         })
 }
+const DriverNotExist = (res)=>{
+        return res
+        .status(utils.HTTP_STATUS.NOT_FOUND)
+        .json({
+                status : utils.STATUS_TEXT.FAIL,
+                message : utils.MESSAGES.DRIVER_NOT_FOUND ,
+                code :  utils.HTTP_STATUS.NOT_FOUND
+        })
+}
 const userIsNotPassenger = (res)=>{
         return res
         .status(utils.HTTP_STATUS.BAD_REQUEST)
@@ -278,5 +287,6 @@ module.exports = {
         notTripDriver,
         emailAlreadyExist,
         phoneAlreadyExist,
-        LlicenseNumberAlreadyExist
+        LlicenseNumberAlreadyExist,
+        DriverNotExist
 }
