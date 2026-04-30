@@ -20,7 +20,7 @@ let cachedToken = null;
 
 async function getAuthToken() {
     try {
-        if (cachedToken) return cachedToken;
+        // if (cachedToken) return cachedToken;
 
         const response = await axios.post(`${PAYMOB_API_URL}/auth/tokens`, {
             api_key: PAYMOB_API_KEY,
