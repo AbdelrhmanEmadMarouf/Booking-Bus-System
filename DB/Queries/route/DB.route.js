@@ -24,6 +24,18 @@ const getRouteId = async(routeName)=>{
 
 }
 
+const getRouteDuration = async(routeId)=>{
+
+        const routeDuration = await sql.query`
+            SELECT duration
+            FROM ROUTE Route 
+            WHERE route_id = ${routeId}
+            `;
+
+        return routeDuration.recordset[0].duration;
+
+}
+
 
 
 
@@ -32,5 +44,6 @@ const getRouteId = async(routeName)=>{
 
 module.exports = {
     createRoute,
-    getRouteId
+    getRouteId,
+    getRouteDuration
 }

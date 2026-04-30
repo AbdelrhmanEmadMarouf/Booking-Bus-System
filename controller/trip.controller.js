@@ -4,18 +4,30 @@ const DB_Ticket = require('../DB/Queries/ticket/DB.ticket');
 const DB_Seat = require('../DB/Queries/seate/DB.seat');
 const DB_bus = require('../DB/Queries/bus/DB.bus');
 const DB_User = require('../DB/Queries/users/DB.users');
+const DB_Route = require('../DB/Queries/route/DB.route');
 const validation = require('../utils/validations');
 const response = require('../utils/responses');
 
 
 const createTrip = asyncWrapper(async(req,res,next)=>{
 
-    const routeName = req.body.routeName;
-    const scheduled_arrival_date = req.body.scheduled_arrival_date;
-    const scheduled_departure_date = req.body.scheduled_departure_date;
+    const routeId = req.body.route_id;
+    let scheduled_departure_date = req.body.scheduled_departure_date;
     const bus_id = req.body.bus_id;
     const driver_id = req.body.driver_id;
     const price = req.body.price;
+
+    const routeDuration = await DB_Route.getRouteDuration(routeId);
+
+    const departureDate = new Date(scheduled_departure_date);
+
+    const arrivalDate = new Date(departureDate.getTime() + routeDuration * 60000);
+
+    scheduled_departure_date = departureDate.toISOString().slice(0,19).replace('T',' ');
+    const scheduled_arrival_date = arrivalDate.toISOString().slice(0,19).replace('T',' ');
+
+
+
 
     if(!await validation.isDriver(driver_id)){
         return response.userIsNotDriver(res);
@@ -34,14 +46,14 @@ const createTrip = asyncWrapper(async(req,res,next)=>{
     }
 
 
-    const tripId =   await DB_Trip.createTrip(routeName,scheduled_arrival_date,scheduled_departure_date,bus_id,driver_id,price);
+    const tripId = await DB_Trip.createTrip(routeId,scheduled_arrival_date,scheduled_departure_date,bus_id,driver_id,price);
 
     await DB_User.incrementUserTrips(driver_id); //* increment driver trips
     
 
     await DB_Seat.initializeTripSeats(bus_id,tripId);
     
-    response.successful(res,{routeName,scheduled_arrival_date,scheduled_departure_date,bus_id,driver_id});
+    response.successful(res,{routeId,scheduled_arrival_date,scheduled_departure_date,bus_id,driver_id});
 
 })
 
