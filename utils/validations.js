@@ -170,6 +170,7 @@ const isSeatFree = async(seatNumber,tripId)=>{
 
 
 
+
     if(!seat){
         return false;
     }

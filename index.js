@@ -12,9 +12,9 @@ const routeRouter = require('./routes/routeRouter');
 const stationRouter = require('./routes/stationRouter');
 const cityRouter = require('./routes/cityRouter');
 const busRouter = require('./routes/busRouter');
-const ticketRouter = require('./routes/ticketRouter');
+// const ticketRouter = require('./routes/ticketRouter');
 const paymentRouter = require('./routes/paymentRouter');
-const usersRouter = require('./routes/usersRouter');
+const passengerRouter = require('./routes/passengerRouter');
 const mangerRouter = require('./routes/mangerRouter');
 const adminRouter = require('./routes/adminRouter');
 const driverRouter = require('./routes/driverRouter');
@@ -37,12 +37,12 @@ app.use(express.json()); //* tp parse request body into json
 
 
 app.use('/api/auth',cors(corsOptions), authRouter);
-app.use('/api/users',cors(corsOptions), usersRouter);
+app.use('/api/passenger',cors(corsOptions), passengerRouter);
 app.use('/api/manger',cors(corsOptions), mangerRouter);
 app.use('/api/driver',cors(corsOptions), driverRouter);
 app.use('/api/admin',cors(corsOptions), adminRouter);
 app.use('/api/trip',cors(corsOptions), tripRouter);
-app.use('/api/ticket',cors(corsOptions), ticketRouter);
+// app.use('/api/ticket',cors(corsOptions), ticketRouter);
 app.use('/api/route',cors(corsOptions), routeRouter);
 app.use('/api/station',cors(corsOptions), stationRouter);
 app.use('/api/city',cors(corsOptions), cityRouter);

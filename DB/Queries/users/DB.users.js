@@ -141,6 +141,29 @@ const getDrivers = async()=>{
     return drivers.recordset;
     
 }
+const getpassengerTickets = async(passengerId)=>{
+
+    let tickets = await sql.query`
+        SELECT 
+        tk.ticket_id,
+        t.trip_id,
+        tk.seat_no,
+        t.price,
+        stO.name as start_station,
+        stD.name as end_station,
+        t.scheduled_departure_date
+        FROM TICKET tk
+        JOIN trip t ON t.trip_id = tk.trip_id
+        JOIN route r on r.route_id = t.route_id
+        JOIN station stO on r.origin_station_id = stO.station_id
+        JOIN station stD on r.destination_station_id = stD.station_id
+        WHERE user_id = ${passengerId}
+    `;
+
+    
+    return tickets.recordset;
+    
+}
 
 
 
@@ -154,5 +177,6 @@ module.exports = {
     getUserByPhone,
     getUserBylicenseNumber,
     incrementUserTrips,
-    getDrivers
+    getDrivers,
+    getpassengerTickets
 }
