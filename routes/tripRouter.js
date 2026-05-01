@@ -16,7 +16,7 @@ router.route('/end/:tripId')
         .post(verifyToken,allowedTo(userRoles.ADMIN,userRoles.MANGER,userRoles.DRIVER),endTrip);
 
 router.route('/')
-        .get(verifyToken,allowedTo(userRoles.ADMIN,userRoles.MANGER,userRoles.PASSENGER),getTrips);
+        .get(verifyToken,allowedTo(userRoles.ADMIN,userRoles.MANGER,userRoles.PASSENGER,userRoles.DRIVER),getTrips);
 
 router.route('/search')
         .get(verifyToken,allowedTo(userRoles.ADMIN,userRoles.MANGER,userRoles.PASSENGER),searchTrip);
