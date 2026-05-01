@@ -7,6 +7,7 @@ const DB_trip = require('../DB/Queries/trip/BD.trip');
 const DB_seat = require('../DB/Queries/seate/DB.seat');
 const DB_Ticket = require('../DB/Queries/ticket/DB.ticket');
 const DB_payment = require('../DB/Queries/payment/DB.payment');
+const DB_Station = require('../DB/Queries/station/DB.station');
 const {userRoles} = require('./userRoles');
 const {seatStatus} = require('../utils/seatsStatus')
 const bcrypt = require('bcrypt');
@@ -278,6 +279,37 @@ const isTripDriver = async(tripId,driverId)=>{
 
 
 
+const isValidDate = (dateStr) => {
+
+    const regex = /^\d{4}-\d{2}-\d{2}$/;
+
+    if (!regex.test(dateStr)) {
+        return false;
+    }
+
+    const date = new Date(dateStr);
+
+
+    if (isNaN(date.getTime())) {
+        return false;
+    }
+
+    return true;
+    }
+
+const isStationExist = async(stationName)=>{
+
+    const station = await DB_Station.getStationId(stationName);
+
+    if(!station){
+        return false
+    }
+    return true
+
+}
+
+
+
 
 module.exports = {
     validateEmailFormat,
@@ -298,5 +330,7 @@ module.exports = {
     isTripDriver,
     isEmailAlreadyExist,
     isPhoneAlreadyExist,
-    isLlicenseNumberAlreadyExist
+    isLlicenseNumberAlreadyExist,
+    isStationExist,
+    isValidDate
 }

@@ -58,7 +58,10 @@ const MESSAGES = {
     NOT_TRIP_DRIVER: "The driver is not assigned to this trip",
     EMAIL_IS_ALREADY_EXIST: "Email already exists",
     PHONE_IS_ALREADY_EXIST: "Phone number already exists",
-    Llicense_Number_IS_ALREADY_EXIST: "License number already exists"
+    Llicense_Number_IS_ALREADY_EXIST: "License number already exists",
+    START_STATION_NOT_FOUND : "Start station is not founded",
+    END_STATION_NOT_FOUND : "End station is not founded",
+    INVALID_DATE : "Invalid date",
 };
 
 

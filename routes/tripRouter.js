@@ -4,7 +4,7 @@ const {verifyToken} = require('../middleware/verifyToken.js');
 const {userRoles} = require('../utils/userRoles.js');
 const {allowedTo} = require('../middleware/allowedTo.js');
 
-const {createTrip, getTrips,getTrip,endTrip,getTripsToday,getSeats} = require('../controller/trip.controller');
+const {createTrip, getTrips,getTrip,endTrip,getTripsToday,getSeats,searchTrip} = require('../controller/trip.controller');
 
 
 
@@ -17,6 +17,9 @@ router.route('/end/:tripId')
 
 router.route('/')
         .get(verifyToken,allowedTo(userRoles.ADMIN,userRoles.MANGER,userRoles.PASSENGER),getTrips);
+
+router.route('/search')
+        .get(verifyToken,allowedTo(userRoles.ADMIN,userRoles.MANGER,userRoles.PASSENGER),searchTrip);
 
 router.route('/today')
         .get(verifyToken,allowedTo(userRoles.ADMIN,userRoles.MANGER,userRoles.PASSENGER),getTripsToday);

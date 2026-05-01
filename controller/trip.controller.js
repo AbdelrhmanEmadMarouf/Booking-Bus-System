@@ -114,6 +114,36 @@ const endTrip = asyncWrapper(async(req,res,next)=>{
 
 })
 
+const searchTrip = asyncWrapper(async(req,res,next)=>{
+
+    const start_station =  req.body.start_station;
+    const end_station =  req.body.end_station;
+    const trip_date =  req.body.trip_date;
+
+    if(!await validation.isStationExist(start_station)){
+        return response.startStaionNotExist(res);
+    }
+    if(!await validation.isStationExist(end_station)){
+        return response.endStaionNotExist(res);
+    }
+    if(!validation.isValidDate(trip_date)){
+        return response.invalisDate(res);
+    }
+
+    const tripsId = await DB_Trip.searchTrip(start_station,end_station,trip_date);
+
+    const trips = [];
+
+    for (const it of tripsId) {
+            const trip = await DB_Trip.getTrip(it.trip_id);
+            trips.push(trip);
+    }
+
+
+    response.successful(res,{trips});
+
+})
+
 
 module.exports = {
     createTrip,
@@ -121,5 +151,6 @@ module.exports = {
     getTrip,
     endTrip,
     getTripsToday,
-    getSeats
+    getSeats,
+    searchTrip
 }

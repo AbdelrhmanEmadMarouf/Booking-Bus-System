@@ -14,10 +14,14 @@ const getStationId = async(stationName)=>{
 
 
         const stationId = await sql.query`
-            SELECT station_id
-            FROM Station 
-            WHERE name = ${stationName}
+                SELECT station_id
+                FROM Station 
+                WHERE name = ${stationName}
                 `;
+
+        if(!stationId.recordset.length){
+                return undefined;
+        }
 
         return stationId.recordset[0].station_id;
 
@@ -59,8 +63,8 @@ const getEndStation = async(tripId)=>{
 
 
 module.exports = {
-    createStation,
-    getStationId,
-    getStartStation,
-    getEndStation
+        createStation,
+        getStationId,
+        getStartStation,
+        getEndStation
 }

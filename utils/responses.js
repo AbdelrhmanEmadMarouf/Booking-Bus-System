@@ -89,6 +89,14 @@ const invalidToken = (res,err) =>{
                 })
 }
 
+const invalisDate = (res,err) =>{
+        return  res.status(utils.HTTP_STATUS.BAD_REQUEST)
+                        .json({
+                                status : utils.STATUS_TEXT.FAIL,
+                                message : utils.MESSAGES.INVALID_DATE,
+                                code :  utils.HTTP_STATUS.BAD_REQUEST
+                        })
+}
 const invalidUser = (res,err) =>{
     return  res.status(utils.HTTP_STATUS.FORBIDDEN)
                     .json({
@@ -262,6 +270,24 @@ const LlicenseNumberAlreadyExist = (res)=>{
         })
 }
 
+const startStaionNotExist = (res)=>{
+        return res
+        .status(utils.HTTP_STATUS.NOT_FOUND)
+        .json({
+                status : utils.STATUS_TEXT.FAIL,
+                message : utils.MESSAGES.START_STATION_NOT_FOUND ,
+                code :  utils.HTTP_STATUS.NOT_FOUND
+        })
+}
+const endStaionNotExist = (res)=>{
+        return res
+        .status(utils.HTTP_STATUS.NOT_FOUND)
+        .json({
+                status : utils.STATUS_TEXT.FAIL,
+                message : utils.MESSAGES.END_STATION_NOT_FOUND ,
+                code :  utils.HTTP_STATUS.NOT_FOUND
+        })
+}
 
 module.exports = { 
         validateOtp,
@@ -288,5 +314,8 @@ module.exports = {
         emailAlreadyExist,
         phoneAlreadyExist,
         LlicenseNumberAlreadyExist,
-        DriverNotExist
+        DriverNotExist,
+        startStaionNotExist,
+        endStaionNotExist,
+        invalisDate
 }

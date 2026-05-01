@@ -129,6 +129,24 @@ const getTripsToday = async () => {
 
     return todayTrips.recordset;
 };
+const searchTrip = async (start_station,end_station,trip_date) => {
+    
+
+    const tripsId = await sql.query`
+        SELECT t.trip_id
+        FROM   trip  t
+        JOIN route r on r.route_id = t.route_id 
+        JOIN station stO on r.origin_station_id = stO.station_id
+        JOIN station stD on r.destination_station_id = stD.station_id
+        WHERE stO.name = ${start_station}
+        AND   stD.name = ${end_station}
+        AND CAST(t.scheduled_departure_date AS DATE) = ${trip_date}
+    `;
+
+    return tripsId.recordset;
+};
+
+
 const getTripPassengers = async (tripId) => {
     
     const tripPassengers = await sql.query`
@@ -154,5 +172,6 @@ module.exports = {
     getTrip,
     deleteTrip,
     getTripsToday,
-    getTripPassengers
+    getTripPassengers,
+    searchTrip
 }
