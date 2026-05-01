@@ -25,7 +25,7 @@ router.route('/today')
         .get(verifyToken,allowedTo(userRoles.ADMIN,userRoles.MANGER,userRoles.PASSENGER),getTripsToday);
 
 router.route('/:tripId')
-        .get(verifyToken,allowedTo(userRoles.ADMIN,userRoles.MANGER,userRoles.PASSENGER),getTrip);
+        .get(verifyToken,allowedTo(userRoles.ADMIN,userRoles.MANGER,userRoles.PASSENGER,userRoles.DRIVER),getTrip);
 
 router.route('/seats/:tripId')
         .get(verifyToken,allowedTo(userRoles.ADMIN,userRoles.MANGER,userRoles.PASSENGER),getSeats);
