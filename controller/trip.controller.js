@@ -72,14 +72,16 @@ const getTrip = asyncWrapper(async(req,res,next)=>{
     const tripId =  req.params.tripId;
 
     const trip = await DB_Trip.getTrip(tripId);
-    response.successful(res,{trip});
+
+    const seats = await DB_Seat.getTripSeats(tripId);
+
+    response.successful(res,{data : trip , seats });
 
 })
 
 
 const getSeats = asyncWrapper(async(req,res,next)=>{
 
-    console.log('test');
 
     const tripId =  req.params.tripId;
 

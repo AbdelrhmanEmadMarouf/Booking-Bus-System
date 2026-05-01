@@ -58,6 +58,7 @@ const getTrips = async()=>{
 SELECT 
     t.trip_id,
     t.scheduled_departure_date,
+    t.scheduled_arrival_date,
     t.price,
     c1.city_name AS from_city,
     c2.city_name AS to_city,
@@ -80,8 +81,8 @@ ORDER BY t.scheduled_departure_date;
 
 const getTrip = async(tripId)=>{
     const trip =   await sql.query`
-        SELECT
-            t.trip_id,
+select
+t.trip_id,
             t.scheduled_departure_date,
             t.scheduled_arrival_date,
             t.price,
@@ -91,7 +92,10 @@ const getTrip = async(tripId)=>{
             s1.name as start_station,
             s2.name as end_station,
             b.plate_no as bus_palte_no,
-            u.first_name + ' ' +u.last_name as driver_name
+            b.model as bus_model,
+            u.first_name + ' ' +u.last_name as driver_name,
+            r.distance ,
+            r.duration
         FROM trip t
         JOIN route r ON t.route_id = r.route_id
         JOIN station s1 ON r.origin_station_id = s1.station_id
