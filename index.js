@@ -12,7 +12,6 @@ const routeRouter = require('./routes/routeRouter');
 const stationRouter = require('./routes/stationRouter');
 const cityRouter = require('./routes/cityRouter');
 const busRouter = require('./routes/busRouter');
-// const ticketRouter = require('./routes/ticketRouter');
 const paymentRouter = require('./routes/paymentRouter');
 const passengerRouter = require('./routes/passengerRouter');
 const mangerRouter = require('./routes/mangerRouter');
@@ -32,6 +31,7 @@ const startServer = async () => {
     });
 };
 
+app.use(cors());
 
 app.use(express.json()); //* tp parse request body into json
 
