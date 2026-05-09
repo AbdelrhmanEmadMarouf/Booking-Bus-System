@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Fetch Test</title>
+</head>
+<body>
+
+<script>
+    fetch("https://booking-bus-system-production.up.railway.app/api/auth/registration", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            first_name: "Mohammed",
+            last_name: "Waled",
+            email: "mawice5954@kynninc.com",
+            password: "123456",
+            phone: "01168723090"
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log("Response:", data);
+    })
+    .catch(error => {
+        console.error("Error:", error);
+    });
+</script>
+
+</body>
+</html>

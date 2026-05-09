@@ -18,10 +18,10 @@ const mangerRouter = require('./routes/mangerRouter');
 const adminRouter = require('./routes/adminRouter');
 const driverRouter = require('./routes/driverRouter');
 
-var corsOptions = {
-    origin:  'http://127.0.0.1:5500',
-    optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
-}
+// var corsOptions = {
+//     origin:  'http://127.0.0.1:5500',
+//     optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+// }
 
 const startServer = async () => {
     await connectDB();
@@ -32,7 +32,6 @@ const startServer = async () => {
 };
 
 app.use(cors());
-
 app.use(express.json()); //* tp parse request body into json
 
 
