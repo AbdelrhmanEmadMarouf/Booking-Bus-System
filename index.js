@@ -35,18 +35,17 @@ app.use(cors());
 app.use(express.json()); //* tp parse request body into json
 
 
-app.use('/api/auth',cors(corsOptions), authRouter);
-app.use('/api/passenger',cors(corsOptions), passengerRouter);
-app.use('/api/manger',cors(corsOptions), mangerRouter);
-app.use('/api/driver',cors(corsOptions), driverRouter);
-app.use('/api/admin',cors(corsOptions), adminRouter);
-app.use('/api/trip',cors(corsOptions), tripRouter);
-// app.use('/api/ticket',cors(corsOptions), ticketRouter);
-app.use('/api/route',cors(corsOptions), routeRouter);
-app.use('/api/station',cors(corsOptions), stationRouter);
-app.use('/api/city',cors(corsOptions), cityRouter);
-app.use('/api/bus',cors(corsOptions), busRouter);
-app.use('/api/payment',cors(corsOptions), paymentRouter);
+app.use('/api/auth', authRouter);
+app.use('/api/passenger', passengerRouter);
+app.use('/api/manger', mangerRouter);
+app.use('/api/driver', driverRouter);
+app.use('/api/admin', adminRouter);
+app.use('/api/trip', tripRouter);
+app.use('/api/route', routeRouter);
+app.use('/api/station', stationRouter);
+app.use('/api/city', cityRouter);
+app.use('/api/bus', busRouter);
+app.use('/api/payment', paymentRouter);
 app.use('/uploads/',express.static(path.join(__dirname,'uploads')));
 
 
