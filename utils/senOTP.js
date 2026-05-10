@@ -10,7 +10,7 @@ module.exports = async (newUser) => {
 
   await brevo.transactionalEmails.sendTransacEmail({
     sender: {
-      name: "Busly",
+      name: "Go2",
       email: process.env.SMTP_USER,
     },
     to: [
@@ -19,7 +19,7 @@ module.exports = async (newUser) => {
         name: newUser.first_name || "عميلنا العزيز",
       }
     ],
-    subject: "رمز التحقق الخاص بك - Busly",
+    subject: "رمز التحقق الخاص بك - Go2",
 
     htmlContent: `
 <!DOCTYPE html>
@@ -57,7 +57,7 @@ module.exports = async (newUser) => {
               <table border="0" cellpadding="0" cellspacing="0" style="display:inline-table;">
                 <tr>
                   <td style="background:linear-gradient(135deg,#6366f1 0%,#4f46e5 100%); padding:12px 25px; border-radius:12px;">
-                    <span style="color:#ffffff; font-size:24px; font-weight:bold; display:block;">Busly</span>
+                    <span style="color:#ffffff; font-size:24px; font-weight:bold; display:block;">Go2</span>
                   </td>
                 </tr>
               </table>
@@ -78,7 +78,7 @@ module.exports = async (newUser) => {
               </h1>
 
               <p style="color:#cbd5e1; font-size:15px; line-height:1.8; margin:15px 0 0 0;">
-                نحن متحمسون لانضمامك إلينا! يرجى استخدام رمز التحقق أدناه لتأكيد هويتك وإتمام عملية التسجيل في منصة <strong>Busly</strong>.
+                نحن متحمسون لانضمامك إلينا! يرجى استخدام رمز التحقق أدناه لتأكيد هويتك وإتمام عملية التسجيل في منصة <strong>GO2</strong>.
               </p>
 
             </td>
@@ -141,7 +141,7 @@ module.exports = async (newUser) => {
                     </div>
 
                     <div style="color:#e2e8f0; font-size:13px; line-height:1.6;">
-                      لا تشارك هذا الرمز مع أي شخص. فريق Busly لن يطلب منك الكود عبر الهاتف أو البريد الإلكتروني.
+                      لا تشارك هذا الرمز مع أي شخص. فريق Go2 لن يطلب منك الكود عبر الهاتف أو البريد الإلكتروني.
                     </div>
 
                   </td>
@@ -166,7 +166,7 @@ module.exports = async (newUser) => {
 
               <div style="border-top:1px solid #1e293b; padding-top:20px;">
                 <span style="color:#475569; font-size:11px; letter-spacing:0.5px;">
-                  &copy; 2026 BUSLY. جميع الحقوق محفوظة.
+                  &copy; 2026 Go2. جميع الحقوق محفوظة.
                 </span>
               </div>
 
@@ -176,7 +176,7 @@ module.exports = async (newUser) => {
         </table>
 
         <p style="margin-top:25px; color:#475569; font-size:11px; text-align:center;">
-          هذه رسالة تلقائية من نظام Busly، يرجى عدم الرد.
+          هذه رسالة تلقائية من نظام Go2، يرجى عدم الرد.
         </p>
 
       </td>
