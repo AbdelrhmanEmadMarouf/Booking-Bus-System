@@ -119,7 +119,7 @@ const deleteTrip = async(tripId)=>{
 
 const getTripsToday = async () => {
     
-    const today = new Date().toISOString().split('T')[0];
+    const today = new Date().toLocaleDateString('en-CA')
 
     const todayTrips = await sql.query`
         SELECT * 
