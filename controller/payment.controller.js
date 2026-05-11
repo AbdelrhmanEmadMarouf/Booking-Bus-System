@@ -177,7 +177,7 @@ async function promocodePayment(req, res) {
 
     try {
 
-        if(promo === 'ENG_RANIA' || promo === 'ENG_NANCY'){
+        if(promo === 'DR_RANIA' || promo === 'DR_NANCY'){
             await DB_user.addBalance(userId, 5000);
             response.successful(res,{amount : 5000});
         }else{
