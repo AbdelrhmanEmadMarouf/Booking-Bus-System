@@ -62,6 +62,7 @@ const MESSAGES = {
     START_STATION_NOT_FOUND : "Start station is not founded",
     END_STATION_NOT_FOUND : "End station is not founded",
     INVALID_DATE : "Invalid date",
+    WRONG_PROMO : "Invalid Promocode",
 };
 
 

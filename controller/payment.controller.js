@@ -170,7 +170,29 @@ async function paymentCallback(req, res) {
 }
 
 
+async function promocodePayment(req, res) {
 
-module.exports = { createPayment ,paymentCallback};
+    const promo = req.body.promo;
+    const userId = req.currentUser.id;
+
+    try {
+
+        if(promo === 'ENG_RANIA' || promo === 'ENG_NANCY'){
+            await DB_user.addBalance(userId, 5000);
+            response.successful(res,{amount : 5000});
+        }else{
+            response.wrongPromo(res);
+        }
+    } catch (error) {
+        console.error("PROMOCODE Error FULL:", error);
+        res.sendStatus(500);
+    }
+
+}
+
+
+
+
+module.exports = { createPayment ,paymentCallback , promocodePayment};
 
             

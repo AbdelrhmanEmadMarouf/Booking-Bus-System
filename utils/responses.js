@@ -288,6 +288,15 @@ const endStaionNotExist = (res)=>{
                 code :  utils.HTTP_STATUS.NOT_FOUND
         })
 }
+const wrongPromo = (res)=>{
+        return res
+        .status(utils.HTTP_STATUS.BAD_REQUEST)
+        .json({
+                status : utils.STATUS_TEXT.FAIL,
+                message : utils.MESSAGES.WRONG_PROMO ,
+                code :  utils.HTTP_STATUS.BAD_REQUEST
+        })
+}
 
 module.exports = { 
         validateOtp,
@@ -317,5 +326,6 @@ module.exports = {
         DriverNotExist,
         startStaionNotExist,
         endStaionNotExist,
-        invalisDate
+        invalisDate,
+        wrongPromo
 }
