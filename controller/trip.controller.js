@@ -99,9 +99,9 @@ const endTrip = asyncWrapper(async(req,res,next)=>{
         return response.tripNotExist(res);
     }
 
-    if(!await validation.isTripDriver(tripId,driverId)){
-        return response.notTripDriver(res);
-    }
+    // if(!await validation.isTripDriver(tripId,driverId)){
+    //     return response.notTripDriver(res);
+    // }
 
     const busId = await DB_bus.getBusId(tripId);
 
