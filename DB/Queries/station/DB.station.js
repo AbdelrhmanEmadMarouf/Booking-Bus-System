@@ -42,6 +42,18 @@ const getStartStation = async(tripId)=>{
         return station.recordset[0].name;
 
 }
+const getStations = async(tripId)=>{
+
+
+        const stations = await sql.query`
+                select name from station
+        `;
+
+        if (!stations.recordset.length) return null;
+
+        return stations.recordset;
+
+}
 const getEndStation = async(tripId)=>{
 
 
@@ -66,5 +78,6 @@ module.exports = {
         createStation,
         getStationId,
         getStartStation,
-        getEndStation
+        getEndStation,
+        getStations
 }

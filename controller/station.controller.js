@@ -14,8 +14,19 @@ const createStation = asyncWrapper(async(req,res,next)=>{
 
 })
 
+const getStation = asyncWrapper(async(req,res,next)=>{
+
+    const stations = await DB.getStations();
+    response.successful(res,{
+        stations
+    });
+    
+
+})
+
 
 
 module.exports = {
-    createStation
+    createStation,
+    getStation
 }
